@@ -1,0 +1,514 @@
+/* ==========================================================================
+   PSG NEXUS CHATBOT WIDGET STYLING
+   ========================================================================== */
+
+/* FLOATING LAUNCHER BUTTON */
+#psg-chatbot-launcher {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #002b5c, #004b93);
+  color: #c5a059;
+  border: 3px solid #c5a059;
+  box-shadow: 0 8px 24px rgba(0, 43, 92, 0.4), 0 0 0 0 rgba(197, 160, 89, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  animation: pulse-ring 2.5s infinite;
+}
+
+#psg-chatbot-launcher:hover {
+  transform: scale(1.08);
+  box-shadow: 0 12px 30px rgba(0, 43, 92, 0.6);
+}
+
+#psg-chatbot-launcher svg {
+  width: 32px;
+  height: 32px;
+  fill: #c5a059;
+}
+
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 8px 24px rgba(0, 43, 92, 0.4), 0 0 0 0 rgba(197, 160, 89, 0.4);
+  }
+  70% {
+    box-shadow: 0 8px 24px rgba(0, 43, 92, 0.4), 0 0 0 14px rgba(197, 160, 89, 0);
+  }
+  100% {
+    box-shadow: 0 8px 24px rgba(0, 43, 92, 0.4), 0 0 0 0 rgba(197, 160, 89, 0);
+  }
+}
+
+/* LAUNCHER TOOLTIP CALLOUT */
+.psg-launcher-tooltip {
+  position: absolute;
+  right: 76px;
+  background-color: #002b5c;
+  color: #ffffff;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  border: 1px solid #c5a059;
+  pointer-events: none;
+  animation: float-tooltip 3s ease-in-out infinite;
+}
+
+@keyframes float-tooltip {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+/* CHATBOT WINDOW CONTAINER */
+#psg-chatbot-window {
+  position: fixed;
+  bottom: 100px;
+  right: 24px;
+  width: 390px;
+  max-width: calc(100vw - 32px);
+  height: 580px;
+  max-height: calc(100vh - 120px);
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 16px 40px rgba(0, 25, 55, 0.25);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 10000;
+  border: 2px solid #002b5c;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: bottom right;
+}
+
+#psg-chatbot-window.hidden {
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0.85) translateY(30px);
+  pointer-events: none;
+}
+
+/* CHAT HEADER */
+.psg-chat-header {
+  background: linear-gradient(135deg, #002b5c, #004b93);
+  color: #ffffff;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid #c5a059;
+}
+
+.psg-chat-header-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.psg-chat-avatar {
+  width: 38px;
+  height: 38px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  color: #002b5c;
+  font-size: 1.1rem;
+  border: 2px solid #c5a059;
+}
+
+.psg-chat-header-text h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.psg-status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.72rem;
+  color: #a8d5ba;
+}
+
+.psg-status-dot {
+  width: 7px;
+  height: 7px;
+  background-color: #2ecc71;
+  border-radius: 50%;
+}
+
+.psg-chat-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.psg-header-btn {
+  background: rgba(255, 255, 255, 0.12);
+  border: none;
+  color: #ffffff;
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.psg-header-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* ACTIVE ROLE BADGE STRIP */
+.psg-role-strip {
+  background-color: #f1f5fa;
+  padding: 6px 16px;
+  font-size: 0.75rem;
+  color: #002b5c;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.psg-role-tag {
+  background-color: #002b5c;
+  color: #c5a059;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 12px;
+  text-transform: uppercase;
+  font-size: 0.68rem;
+  letter-spacing: 0.5px;
+}
+
+.psg-switch-role-btn {
+  background: none;
+  border: none;
+  color: #004b93;
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+  font-size: 0.75rem;
+}
+
+/* CHAT MESSAGES BODY */
+.psg-chat-body {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  background-color: #fafbfc;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* MESSAGE BUBBLES */
+.psg-message {
+  display: flex;
+  flex-direction: column;
+  max-width: 85%;
+  animation: fade-in 0.25s ease-out;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.psg-message.user {
+  align-self: flex-end;
+  align-items: flex-end;
+}
+
+.psg-message.bot {
+  align-self: flex-start;
+  align-items: flex-start;
+}
+
+.psg-bubble {
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  word-break: break-word;
+}
+
+.psg-message.user .psg-bubble {
+  background-color: #002b5c;
+  color: #ffffff;
+  border-bottom-right-radius: 2px;
+}
+
+.psg-message.bot .psg-bubble {
+  background-color: #ffffff;
+  color: #222222;
+  border: 1px solid #e1e7f0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  border-bottom-left-radius: 2px;
+}
+
+.psg-msg-time {
+  font-size: 0.68rem;
+  color: #8c9ba5;
+  margin-top: 4px;
+  padding: 0 4px;
+}
+
+/* REDIRECTION NOTIFICATION CARD */
+.psg-redirect-banner {
+  background: #fff8e6;
+  border: 1px solid #c5a059;
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-top: 8px;
+  font-size: 0.82rem;
+  color: #002b5c;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.psg-redirect-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #c5a059;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* RESTRICTION WARNING BUBBLE */
+.psg-message.restricted .psg-bubble {
+  background-color: #fff1f0;
+  border: 1px solid #ffa39e;
+  color: #cf1322;
+}
+
+/* OUT OF SCOPE WARNING BUBBLE */
+.psg-message.out-of-scope .psg-bubble {
+  background-color: #f6ffed;
+  border: 1px solid #b7eb8f;
+  color: #389e0d;
+}
+
+/* TYPING INDICATOR */
+.psg-typing-indicator {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 12px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e1e7f0;
+  width: fit-content;
+}
+
+.psg-typing-dot {
+  width: 6px;
+  height: 6px;
+  background-color: #002b5c;
+  border-radius: 50%;
+  animation: bounce 1.4s infinite ease-in-out;
+}
+
+.psg-typing-dot:nth-child(1) { animation-delay: -0.32s; }
+.psg-typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes bounce {
+  0%, 80%, 100% { transform: scale(0); }
+  40% { transform: scale(1); }
+}
+
+/* QUICK ACTION CHIPS */
+.psg-quick-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.psg-chip {
+  background-color: #edf2f8;
+  color: #002b5c;
+  border: 1px solid #d0dbe9;
+  padding: 4px 10px;
+  border-radius: 14px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 500;
+}
+
+.psg-chip:hover {
+  background-color: #002b5c;
+  color: #c5a059;
+  border-color: #002b5c;
+}
+
+/* ONBOARDING ROLE CARD */
+.psg-onboarding-card {
+  background-color: #ffffff;
+  border: 1px solid #c5a059;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 14px rgba(0, 43, 92, 0.08);
+}
+
+.psg-onboarding-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #002b5c;
+  margin-bottom: 4px;
+}
+
+.psg-onboarding-sub {
+  font-size: 0.78rem;
+  color: #666666;
+  margin-bottom: 12px;
+}
+
+.psg-role-selector-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.psg-role-btn {
+  background-color: #f8fafc;
+  border: 1.5px solid #cbd5e1;
+  padding: 8px 6px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #002b5c;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.psg-role-btn.active,
+.psg-role-btn:hover {
+  background-color: #002b5c;
+  color: #c5a059;
+  border-color: #002b5c;
+}
+
+.psg-details-group {
+  margin-bottom: 10px;
+}
+
+.psg-details-group label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #333333;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.psg-details-group input,
+.psg-details-group select {
+  width: 100%;
+  padding: 7px 10px;
+  font-size: 0.82rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+}
+
+.psg-start-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #002b5c, #004b93);
+  color: #ffffff;
+  border: none;
+  padding: 9px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  border-bottom: 2px solid #c5a059;
+  transition: opacity 0.2s;
+}
+
+.psg-start-btn:hover {
+  opacity: 0.95;
+}
+
+/* CHAT FOOTER & INPUT */
+.psg-chat-footer {
+  padding: 10px 14px;
+  background-color: #ffffff;
+  border-top: 1px solid #e2e8f0;
+}
+
+.psg-chat-form {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.psg-chat-input {
+  flex: 1;
+  padding: 9px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 20px;
+  font-size: 0.88rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.psg-chat-input:focus {
+  border-color: #002b5c;
+  box-shadow: 0 0 0 2px rgba(0, 43, 92, 0.1);
+}
+
+.psg-send-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #002b5c;
+  color: #c5a059;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s, background 0.2s;
+}
+
+.psg-send-btn:hover {
+  background: #004b93;
+  transform: scale(1.05);
+}
+
+.psg-send-btn svg {
+  width: 18px;
+  height: 18px;
+  fill: #c5a059;
+}
+
+.psg-footer-disclaimer {
+  font-size: 0.65rem;
+  color: #8c9ba5;
+  text-align: center;
+  margin-top: 4px;
+}

@@ -1,0 +1,189 @@
+<%- include('partials/header') %>
+
+<div class="container my-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <span class="badge bg-primary mb-1">ONLINE SERVICES PORTAL</span>
+      <h2 class="fw-bold text-primary">Student & Staff Form Filling Portal</h2>
+      <p class="text-muted">Direct digital requisition for certificates, exam credentials, and campus passes</p>
+    </div>
+    <div>
+      <span class="badge bg-info text-dark p-2">⚡ Instant E-Verification</span>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    <!-- FORM TABS / NAV -->
+    <div class="col-lg-4">
+      <div class="list-group shadow-sm border-0" id="formListTab" role="tablist">
+        <a class="list-group-item list-group-item-action active p-3" id="tab-bonafide" data-bs-toggle="list" href="#pane-bonafide" role="tab">
+          <div class="fw-bold">📄 Bonafide Certificate Application</div>
+          <small class="text-muted">For bank loans, passport, bus/train concession</small>
+        </a>
+        <a class="list-group-item list-group-item-action p-3" id="tab-hostel" data-bs-toggle="list" href="#pane-hostel" role="tab">
+          <div class="fw-bold">🏠 Hostel Outing / Leave Pass</div>
+          <small class="text-muted">Digital pass for weekend home travel & late entry</small>
+        </a>
+        <a class="list-group-item list-group-item-action p-3" id="tab-hallticket" data-bs-toggle="list" href="#pane-hallticket" role="tab">
+          <div class="fw-bold">🎫 Hall Ticket & Examination Requisition</div>
+          <small class="text-muted">Autonomous End-Semester duplicate ticket request</small>
+        </a>
+      </div>
+
+      <div class="alert alert-warning mt-4 small border-warning">
+        <strong>💡 Chatbot Synergy:</strong> You were brought to this page seamlessly. Notice that your <strong>PSG Nexus AI Chatbot</strong> in the bottom right is still open and remembers your prior questions!
+      </div>
+    </div>
+
+    <!-- FORM INPUTS -->
+    <div class="col-lg-8">
+      <div class="card border-0 shadow-sm">
+        <div class="card-body p-4">
+          <div class="tab-content" id="nav-tabContent">
+            
+            <!-- PANE 1: BONAFIDE CERTIFICATE -->
+            <div class="tab-pane fade show active" id="pane-bonafide" role="tabpanel">
+              <h4 class="fw-bold text-primary mb-3">Apply for Bonafide Certificate</h4>
+              <form id="bonafideForm" onsubmit="return handleFormSubmit(event, 'Bonafide Certificate')">
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label small fw-bold">Student Name</label>
+                    <input type="text" class="form-control" id="bonafide-name" required placeholder="Full Name as in 12th marksheet">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label small fw-bold">Roll Number</label>
+                    <input type="text" class="form-control" id="bonafide-roll" required placeholder="e.g. 26MX101">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label small fw-bold">Department / Program</label>
+                    <select class="form-select" id="bonafide-dept" required>
+                      <option value="MCA">Computer Applications (MCA)</option>
+                      <option value="CSE">Computer Science & Engineering</option>
+                      <option value="IT">Information Technology</option>
+                      <option value="Mechanical">Mechanical Engineering</option>
+                      <option value="EEE">Electrical & Electronics</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label small fw-bold">Purpose of Certificate</label>
+                    <select class="form-select" id="bonafide-purpose" required>
+                      <option value="Bank Education Loan">Bank Education Loan</option>
+                      <option value="Passport Verification">Passport Verification</option>
+                      <option value="State Scholarship Application">State Scholarship Application</option>
+                      <option value="Bus / Train Concession Pass">Bus / Train Concession Pass</option>
+                    </select>
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label small fw-bold">Additional Remarks (Optional)</label>
+                    <textarea class="form-control" rows="2" placeholder="Mention any specific address requirement for the bank"></textarea>
+                  </div>
+                  <div class="col-12 mt-4 text-end">
+                    <button type="submit" class="btn btn-primary px-4">Submit Bonafide Application</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <!-- PANE 2: HOSTEL LEAVE -->
+            <div class="tab-pane fade" id="pane-hostel" role="tabpanel">
+              <h4 class="fw-bold text-primary mb-3">Hostel Outing / Leave Pass Requisition</h4>
+              <form id="hostelForm" onsubmit="return handleFormSubmit(event, 'Hostel Leave Pass')">
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label small fw-bold">Resident Roll Number</label>
+                    <input type="text" class="form-control" required placeholder="e.g. 26MX101">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label small fw-bold">Hostel Block & Room No.</label>
+                    <input type="text" class="form-control" required placeholder="Block F - Room 302">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label small fw-bold">Out Date & Time</label>
+                    <input type="datetime-local" class="form-control" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label small fw-bold">Expected In Date & Time</label>
+                    <input type="datetime-local" class="form-control" required>
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label small fw-bold">Parent / Local Guardian Mobile No.</label>
+                    <input type="tel" class="form-control" required placeholder="10-digit mobile number for SMS OTP">
+                  </div>
+                  <div class="col-12 mt-4 text-end">
+                    <button type="submit" class="btn btn-warning fw-bold px-4">Generate Digital Outing Slip</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <!-- PANE 3: HALL TICKET REQUISITION -->
+            <div class="tab-pane fade" id="pane-hallticket" role="tabpanel">
+              <h4 class="fw-bold text-primary mb-3">Autonomous Examination Hall Ticket</h4>
+              <form id="hallTicketForm" onsubmit="return handleFormSubmit(event, 'Hall Ticket Duplicate')">
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label small fw-bold">Roll Number</label>
+                    <input type="text" class="form-control" required placeholder="e.g. 26MX101">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label small fw-bold">Semester</label>
+                    <select class="form-select" required>
+                      <option>Semester I</option>
+                      <option>Semester II</option>
+                      <option>Semester III</option>
+                      <option>Semester IV</option>
+                      <option>Semester V</option>
+                      <option>Semester VI</option>
+                    </select>
+                  </div>
+                  <div class="col-12">
+                    <div class="p-3 bg-light rounded small">
+                      <strong>Requirement:</strong> Ensure no library dues or tuition fee arrears before requisitioning Autonomous COE Hall Tickets.
+                    </div>
+                  </div>
+                  <div class="col-12 mt-3 text-end">
+                    <button type="submit" class="btn btn-success px-4">Download Hall Ticket (PDF)</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SUCCESS MODAL (Following classroom exercise standards) -->
+<div class="modal fade" id="formSuccessModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-success text-white">
+        <h5 class="modal-title">Application Submitted Successfully</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body text-center p-4">
+        <div class="text-success mb-2" style="font-size: 2.5rem;">✓</div>
+        <h5 class="text-success" id="submittedFormTitle">Bonafide Certificate</h5>
+        <p class="text-muted small">Your requisition has been recorded with Reference ID: <strong>PSG-REQ-2026-<%= Math.floor(1000 + Math.random() * 9000) %></strong>.</p>
+        <p class="small">The designated authority will process it within 2 working days. You will receive an SMS confirmation.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function handleFormSubmit(event, formName) {
+  event.preventDefault();
+  document.getElementById('submittedFormTitle').textContent = formName;
+  var successModal = new bootstrap.Modal(document.getElementById('formSuccessModal'));
+  successModal.show();
+  return false;
+}
+</script>
+
+<%- include('partials/footer') %>

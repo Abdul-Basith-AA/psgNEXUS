@@ -1,0 +1,26 @@
+{
+  "name": "psgnexus",
+  "version": "1.0.0",
+  "description": "PSG Nexus - Intelligent Role-Based Campus Assistant & Official Portal for PSG College of Technology",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": [
+    "psg-tech",
+    "chatbot",
+    "role-based-access",
+    "node",
+    "express",
+    "ejs"
+  ],
+  "author": "Karthikeyan, Laxman, Basith",
+  "license": "ISC",
+  "dependencies": {
+    "@google/genai": "^2.31.0",
+    "dotenv": "^16.4.7",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2"
+  }
+}

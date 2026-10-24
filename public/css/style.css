@@ -1,0 +1,213 @@
+:root {
+  --psg-primary: #002b5c;
+  --psg-secondary: #004b93;
+  --psg-gold: #c5a059;
+  --psg-gold-light: #fdf8eb;
+  --psg-light: #f4f6fa;
+  --psg-dark: #1b2430;
+  --psg-gray: #6c757d;
+  --font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: #fafbfc;
+  color: #333333;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* TOP ANNOUNCEMENT BAR */
+.top-header-bar {
+  background-color: var(--psg-primary);
+  color: #e0e9f5;
+  font-size: 0.82rem;
+  padding: 6px 0;
+  border-bottom: 2px solid var(--psg-gold);
+}
+
+.top-header-bar a {
+  color: #e0e9f5;
+  text-decoration: none;
+  margin-left: 15px;
+}
+
+.top-header-bar a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+/* MAIN COLLEGE HEADER */
+.college-brand-header {
+  background: #ffffff;
+  padding: 16px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.college-logo-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.college-crest-icon {
+  width: 54px;
+  height: 54px;
+  background: linear-gradient(135deg, var(--psg-primary), var(--psg-secondary));
+  color: var(--psg-gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.4rem;
+  box-shadow: 0 4px 8px rgba(0, 43, 92, 0.2);
+  border: 2px solid var(--psg-gold);
+}
+
+.college-title h1 {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--psg-primary);
+  margin: 0;
+  letter-spacing: -0.2px;
+}
+
+.college-title p {
+  font-size: 0.85rem;
+  color: var(--psg-gray);
+  margin: 0;
+  font-weight: 500;
+}
+
+/* NAVIGATION */
+.main-nav {
+  background-color: var(--psg-primary);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-nav .nav-link {
+  color: #ffffff !important;
+  font-weight: 500;
+  font-size: 0.95rem;
+  padding: 12px 16px !important;
+  transition: all 0.2s ease-in-out;
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active {
+  background-color: var(--psg-secondary);
+  color: #ffffff !important;
+  border-bottom: 3px solid var(--psg-gold);
+}
+
+/* HERO SECTION */
+.hero-banner {
+  background: linear-gradient(135deg, rgba(0, 43, 92, 0.95), rgba(0, 75, 147, 0.88)), url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=1200&q=80') center/cover;
+  color: #ffffff;
+  padding: 55px 0;
+  border-bottom: 4px solid var(--psg-gold);
+}
+
+.hero-banner h2 {
+  font-weight: 800;
+  font-size: 2.2rem;
+  letter-spacing: -0.5px;
+}
+
+.hero-banner p {
+  font-size: 1.1rem;
+  color: #dbe4ef;
+  max-width: 650px;
+}
+
+/* SECTION CARDS & MODULES */
+.feature-card {
+  background: #ffffff;
+  border: 1px solid #e5e9f2;
+  border-radius: 8px;
+  padding: 24px;
+  height: 100%;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 18px rgba(0, 43, 92, 0.1);
+  border-color: #cbd5e1;
+}
+
+.feature-icon-badge {
+  width: 46px;
+  height: 46px;
+  background-color: var(--psg-gold-light);
+  color: var(--psg-primary);
+  border: 1px solid rgba(197, 160, 89, 0.3);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  margin-bottom: 16px;
+}
+
+.feature-card h4 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--psg-primary);
+  margin-bottom: 10px;
+}
+
+.feature-card p {
+  font-size: 0.9rem;
+  color: #555555;
+  line-height: 1.5;
+}
+
+/* ANNOUNCEMENT TICKER */
+.notice-box {
+  background-color: #fff9e6;
+  border-left: 4px solid var(--psg-gold);
+  padding: 12px 18px;
+  border-radius: 0 6px 6px 0;
+  margin-bottom: 24px;
+}
+
+/* FOOTER */
+footer {
+  margin-top: auto;
+  background-color: var(--psg-primary);
+  color: #d0d7e2;
+  font-size: 0.88rem;
+  border-top: 3px solid var(--psg-gold);
+  padding: 30px 0 15px;
+}
+
+footer h5 {
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 14px;
+  border-bottom: 1px solid rgba(197, 160, 89, 0.3);
+  padding-bottom: 6px;
+}
+
+footer a {
+  color: #b8c8dc;
+  text-decoration: none;
+}
+
+footer a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.copyright-bar {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 20px;
+  padding-top: 12px;
+  font-size: 0.8rem;
+  color: #92a4ba;
+}

@@ -1,0 +1,102 @@
+<%- include('partials/header') %>
+
+<!-- HERO BANNER -->
+<section class="hero-banner">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-8">
+        <span class="badge bg-warning text-dark mb-2 px-3 py-1 fw-bold">WELCOME TO PSG TECH</span>
+        <h2>Shaping Engineers & Innovators Since 1951</h2>
+        <p>A premier autonomous institution dedicated to academic excellence, pioneering industrial research, and comprehensive student growth.</p>
+        <div class="d-flex gap-3 mt-4">
+          <a href="/admissions" class="btn btn-warning fw-bold text-dark px-4 py-2">Explore Admissions</a>
+          <a href="/forms" class="btn btn-outline-light px-4 py-2">Student Forms & Certificates</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN CONTENT -->
+<main class="container my-5">
+
+  <!-- NOTICE TICKER -->
+  <div class="notice-box d-flex align-items-center justify-content-between">
+    <div>
+      <span class="badge bg-danger me-2">LATEST NOTICES</span>
+      <strong>Autonomous End-Semester Examination Schedule:</strong> Continuous Assessment Test (CAT-3) & Hall Ticket requisitions are now open online!
+    </div>
+    <a href="/academics" class="btn btn-sm btn-outline-dark">View Calendar</a>
+  </div>
+
+  <!-- KEY PORTAL MODULES -->
+  <div class="row g-4">
+    <div class="col-md-6 col-lg-3">
+      <div class="feature-card">
+        <div class="feature-icon-badge">📚</div>
+        <h4>Academics & Syllabus</h4>
+        <p>Browse semester curricula, credit rules, elective course lists, and degree regulations for UG and PG programs.</p>
+        <a href="/academics" class="btn btn-sm btn-outline-primary mt-2">View Syllabi &rarr;</a>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+      <div class="feature-card">
+        <div class="feature-icon-badge">🎓</div>
+        <h4>Admissions & Fees</h4>
+        <p>Check TNEA eligibility cutoffs, tuition fee schedules, scholarship criteria, and application protocols.</p>
+        <a href="/admissions" class="btn btn-sm btn-outline-primary mt-2">Admissions Info &rarr;</a>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+      <div class="feature-card">
+        <div class="feature-icon-badge">📝</div>
+        <h4>Online Form Filling</h4>
+        <p>Apply digitally for Bonafide certificates, hostel outing passes, grade sheet revaluations, and hall tickets.</p>
+        <a href="/forms" class="btn btn-sm btn-outline-primary mt-2">Open Forms Portal &rarr;</a>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+      <div class="feature-card">
+        <div class="feature-icon-badge">🏛️</div>
+        <h4>Facilities & Hostels</h4>
+        <p>Explore Dr. G.R.D. Memorial Central Library, boys & girls hostel accommodations, athletic complex, and canteens.</p>
+        <a href="/facilities" class="btn btn-sm btn-outline-primary mt-2">Explore Campus &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- INTERACTIVE DEMO INSTRUCTIONS CARD -->
+  <div class="card mt-5 border-primary shadow-sm">
+    <div class="card-header bg-primary text-white py-3">
+      <h5 class="mb-0">🤖 How to Test the PSG Nexus AI Assistant (Semester Project Feature Checklist)</h5>
+    </div>
+    <div class="card-body p-4">
+      <div class="row g-4">
+        <div class="col-md-4">
+          <h6 class="text-primary fw-bold">1. Multi-Page Redirection</h6>
+          <p class="small text-muted mb-2">Click the bottom-right AI button and type:</p>
+          <div class="bg-light p-2 rounded border font-monospace small">"Take me to form filling page"</div>
+          <p class="small text-muted mt-2">The assistant will answer, show a countdown, and redirect you to <code>/forms</code> while keeping your chat session active!</p>
+        </div>
+        <div class="col-md-4">
+          <h6 class="text-primary fw-bold">2. Strict Campus Guardrails</h6>
+          <p class="small text-muted mb-2">Try asking an off-topic question:</p>
+          <div class="bg-light p-2 rounded border font-monospace small">"Who won the cricket match?"</div>
+          <p class="small text-muted mt-2">The bot politely refuses, remaining strictly bounded to PSG Tech campus queries.</p>
+        </div>
+        <div class="col-md-4">
+          <h6 class="text-primary fw-bold">3. Role-Based Document Access</h6>
+          <p class="small text-muted mb-2">Log in as <strong>Student</strong> and ask:</p>
+          <div class="bg-light p-2 rounded border font-monospace small">"Show faculty meeting minutes"</div>
+          <p class="small text-muted mt-2">Access is <strong>Denied</strong>! Now switch role to <strong>Faculty</strong> and ask again: Access is <strong>Granted</strong>!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<%- include('partials/footer') %>

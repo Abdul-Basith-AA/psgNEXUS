@@ -1,0 +1,47 @@
+{
+  "roles": ["student", "faculty", "parent", "visitor"],
+  "documents": [
+    {
+      "id": "syllabus_curriculum",
+      "name": "Curriculum & Syllabus (UG/PG)",
+      "allowedRoles": ["student", "faculty", "parent", "visitor"],
+      "pageLink": "/academics"
+    },
+    {
+      "id": "bonafide_certificate_form",
+      "name": "Bonafide Certificate & Hall Ticket Form",
+      "allowedRoles": ["student", "faculty"],
+      "pageLink": "/forms"
+    },
+    {
+      "id": "fee_structure_guide",
+      "name": "Fee Structure & Payment Schedule",
+      "allowedRoles": ["student", "faculty", "parent", "visitor"],
+      "pageLink": "/admissions"
+    },
+    {
+      "id": "hostel_leave_pass",
+      "name": "Hostel Outing / Leave Application",
+      "allowedRoles": ["student", "faculty"],
+      "pageLink": "/forms"
+    },
+    {
+      "id": "faculty_meeting_minutes",
+      "name": "Academic Council & Faculty Meeting Minutes",
+      "allowedRoles": ["faculty"],
+      "restrictionMessage": "⚠️ Access Restricted: Academic Council and Faculty Meeting Minutes are confidential to PSG Tech Teaching Staff and Administration."
+    },
+    {
+      "id": "staff_salary_statements",
+      "name": "Staff Payroll & Appraisal Statements",
+      "allowedRoles": ["faculty"],
+      "restrictionMessage": "⚠️ Access Restricted: Payroll and confidential staff appraisal records are accessible only to authenticated Faculty/Staff members."
+    },
+    {
+      "id": "end_sem_question_master",
+      "name": "Autonomous End-Semester Question Paper Moderation Bank",
+      "allowedRoles": ["faculty"],
+      "restrictionMessage": "⚠️ Access Restricted: Question Paper Moderation Repositories are strictly protected by the Controller of Examinations (COE)."
+    }
+  ]
+}

@@ -1,0 +1,143 @@
+{
+  "college": {
+    "name": "PSG College of Technology",
+    "shortName": "PSG Tech",
+    "location": "Peelamedu, Coimbatore - 641004, Tamil Nadu, India",
+    "established": 1951,
+    "affiliation": "Autonomous Institution, Affiliated to Anna University, Approved by AICTE, Accredited by NAAC with A+ Grade",
+    "nirfRank": "Consistent Top 60 in Engineering Categories across India"
+  },
+  "navigationRoutes": [
+    {
+      "keywords": ["form", "fill form", "apply", "bonafide", "leave application", "hall ticket form", "certificate", "request letter", "grievance"],
+      "url": "/forms",
+      "name": "Form Filling Portal",
+      "reply": "Opening the PSG Tech Form Filling Portal for you. You can submit applications for Bonafide certificates, hostel leave, and hall ticket requisitions here."
+    },
+    {
+      "keywords": ["admission", "cutoff", "apply b.e", "mca admission", "m.tech", "eligibility", "fees", "tnea", "fee structure", "tuition fee"],
+      "url": "/admissions",
+      "name": "Admissions & Fees Portal",
+      "reply": "Redirecting you to the Admissions & Fee Structure page where you can explore eligibility criteria, TNEA cutoffs, and fee breakdowns."
+    },
+    {
+      "keywords": ["syllabus", "curriculum", "academics", "semester", "regulations", "course", "subjects", "credit", "exam timetable"],
+      "url": "/academics",
+      "name": "Academics & Syllabus",
+      "reply": "Directing you to the Academics & Curriculum repository. You will find department syllabi (UG/PG), academic calendars, and course regulations."
+    },
+    {
+      "keywords": ["hostel", "library", "canteen", "sports", "gym", "campus facility", "mess", "wifi", "hostel timing"],
+      "url": "/facilities",
+      "name": "Campus Facilities & Hostels",
+      "reply": "Taking you to the Campus Facilities overview. Detailed information on G.R.D. Memorial Library, boys/girls hostels, sports complexes, and dining."
+    },
+    {
+      "keywords": ["about", "history", "nirf", "accreditation", "principal", "trust", "management", "vision"],
+      "url": "/about",
+      "name": "About PSG Tech",
+      "reply": "Navigating to the About PSG Tech page highlighting our 70+ years legacy, accreditations, and institutional leadership."
+    },
+    {
+      "keywords": ["contact", "phone", "email", "address", "helpdesk", "office", "coe", "emergency", "location"],
+      "url": "/contact",
+      "name": "Contact & Helpdesk",
+      "reply": "Opening the Campus Contact & Emergency Directory with administrative extension numbers and office emails."
+    },
+    {
+      "keywords": ["home", "main page", "portal", "dashboard"],
+      "url": "/",
+      "name": "PSG Tech Home",
+      "reply": "Taking you to the PSG College of Technology main homepage."
+    }
+  ],
+  "restrictedKeywords": [
+    {
+      "keywords": ["salary", "payroll", "payslip", "remuneration", "faculty salary"],
+      "docId": "staff_salary_statements",
+      "restrictedFor": ["student", "parent", "visitor"],
+      "message": "⚠️ Access Restricted: Staff payroll, allowance, and remuneration details are confidential and accessible solely to authenticated Faculty & Administration."
+    },
+    {
+      "keywords": ["meeting minutes", "academic council minutes", "syndicate", "governing body meeting", "staff meeting"],
+      "docId": "faculty_meeting_minutes",
+      "restrictedFor": ["student", "parent", "visitor"],
+      "message": "⚠️ Access Restricted: Academic Council and internal staff meeting proceedings are classified for Faculty and Management members only."
+    },
+    {
+      "keywords": ["question paper bank", "end sem question paper", "moderation", "coe confidential", "coe secret"],
+      "docId": "end_sem_question_master",
+      "restrictedFor": ["student", "parent", "visitor"],
+      "message": "⚠️ Access Denied: Autonomous End-Semester question moderation files are strictly controlled under the Controller of Examinations (COE) security protocol."
+    }
+  ],
+  "outOfScopeTopics": [
+    "movie", "cinema", "cricket score", "weather in delhi", "weather in mumbai",
+    "cook", "recipe", "video game", "bollywood", "hollywood", "politics", "election",
+    "bitcoin", "crypto", "dating", "stock market advice", "joke", "song lyrics",
+    "write a python script for a calculator", "write an essay about lions"
+  ],
+  "faqByRole": {
+    "student": [
+      {
+        "keywords": ["attendance", "minimum attendance"],
+        "answer": "As per Autonomous regulations, minimum required attendance is 75% per course to appear for Autonomous End-Semester Examinations. Students between 65%-74% must apply for condonation under medical grounds."
+      },
+      {
+        "keywords": ["internal marks", "ca marks", "continuous assessment"],
+        "answer": "Continuous Assessment (CA) carries 50 marks for theory courses based on 3 Continuous Assessment Tests (CATs), assignments, and tutorial seminars."
+      },
+      {
+        "keywords": ["hostel timing", "in time"],
+        "answer": "Hostel in-time is strictly 8:30 PM (biometric verification). Late gate entry requires pre-approved digital outing slips generated through the hostel form portal."
+      },
+      {
+        "keywords": ["bonafide", "get bonafide"],
+        "answer": "You can request a Bonafide Certificate online via the Form Filling portal. After approval by the HoD, it will be issued within 2 working days.",
+        "redirect": "/forms"
+      }
+    ],
+    "faculty": [
+      {
+        "keywords": ["leave", "casual leave", "apply leave", "cl", "od"],
+        "answer": "Faculty members can file Casual Leave (CL), On-Duty (OD) permissions, and Compensatory Offs via the Staff Self-Service section on the Forms Portal.",
+        "redirect": "/forms"
+      },
+      {
+        "keywords": ["meeting minutes", "staff meeting"],
+        "answer": "Academic Council & Departmental Staff meeting minutes are available under the Faculty Intranet portal archives."
+      },
+      {
+        "keywords": ["syllabus revision", "curriculum committee"],
+        "answer": "Board of Studies (BOS) syllabus revision proposals can be submitted to the Academic Council coordinator before November 15."
+      }
+    ],
+    "parent": [
+      {
+        "keywords": ["fee", "pay fee", "hostel fee"],
+        "answer": "Semester tuition and hostel fees can be paid through the official PSG Tech payment gateway via Net Banking, UPI, or Challan at Indian Bank, Peelamedu branch.",
+        "redirect": "/admissions"
+      },
+      {
+        "keywords": ["warden", "hostel contact"],
+        "answer": "Chief Warden Office: 0422-4344777 (Hostel Office). Visiting hours for parents are between 4:00 PM and 6:30 PM on weekends."
+      },
+      {
+        "keywords": ["progress", "marks", "report card"],
+        "answer": "Student semester grade sheets and attendance logs are updated on the Parent Portal using the student roll number and registered parent mobile OTP."
+      }
+    ],
+    "visitor": [
+      {
+        "keywords": ["admission", "how to join", "cutoff"],
+        "answer": "B.E./B.Tech admissions are conducted through TNEA counselling based on 12th standard cutoffs. M.E./M.Tech/MCA/MBA are via TANCET / GATE counselling.",
+        "redirect": "/admissions"
+      },
+      {
+        "keywords": ["campus tour", "location", "reach psg"],
+        "answer": "PSG Tech is situated on Avinashi Road, Peelamedu, Coimbatore (approx. 4 km from Coimbatore International Airport and 7 km from Coimbatore Railway Junction).",
+        "redirect": "/contact"
+      }
+    ]
+  }
+}

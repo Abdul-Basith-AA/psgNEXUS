@@ -1,0 +1,72 @@
+<!-- ==========================================================================
+     PSG NEXUS PERSISTENT CHATBOT COMPONENT (Included across all portal pages)
+     ========================================================================== -->
+
+<!-- FLOATING TRIGGER LAUNCHER -->
+<div id="psg-chatbot-launcher" title="Open PSG Nexus AI Assistant">
+  <div class="psg-launcher-tooltip">Ask PSG Nexus AI 💬</div>
+  <svg viewBox="0 0 24 24">
+    <path d="M12 2C6.477 2 2 6.477 2 12c0 1.821.487 3.53 1.338 5L2.1 21.9l4.9-1.238C8.47 21.513 10.179 22 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm1 14h-2v-2h2v2zm0-4h-2V7h2v5z"/>
+  </svg>
+</div>
+
+<!-- CHATBOT MODAL WINDOW -->
+<div id="psg-chatbot-window" class="hidden">
+  
+  <!-- HEADER -->
+  <div class="psg-chat-header">
+    <div class="psg-chat-header-info">
+      <div class="psg-chat-avatar">🤖</div>
+      <div class="psg-chat-header-text">
+        <h3>PSG Nexus AI</h3>
+        <div class="psg-status-indicator">
+          <span class="psg-status-dot"></span>
+          <span>Official Campus Assistant</span>
+        </div>
+      </div>
+    </div>
+    <div class="psg-chat-header-actions">
+      <button class="psg-header-btn" id="psg-reset-chat-btn" title="Clear chat history">🔄</button>
+      <button class="psg-header-btn" id="psg-minimize-chat-btn" title="Minimize">−</button>
+      <button class="psg-header-btn" id="psg-close-chat-btn" title="Close">✕</button>
+    </div>
+  </div>
+
+  <!-- ROLE STATUS STRIP -->
+  <div class="psg-role-strip">
+    <div>
+      <span>Active Session: </span>
+      <span class="psg-role-tag" id="psg-active-role-badge">GUEST</span>
+    </div>
+    <button type="button" class="psg-switch-role-btn" id="psg-switch-role-btn">Switch Role</button>
+  </div>
+
+  <!-- CHAT MESSAGES BODY -->
+  <div class="psg-chat-body" id="psg-chat-body">
+    <!-- ONBOARDING FORM CONTAINER (Injected if role is not set) -->
+    <div id="psg-onboarding-container" style="display: none;"></div>
+  </div>
+
+  <!-- CHAT INPUT FOOTER -->
+  <div class="psg-chat-footer">
+    <form class="psg-chat-form" id="psg-chat-form">
+      <input 
+        type="text" 
+        id="psg-chat-input" 
+        class="psg-chat-input" 
+        placeholder="Ask about syllabus, forms, fees, hostels..." 
+        autocomplete="off" 
+        required
+      >
+      <button type="submit" class="psg-send-btn" id="psg-send-btn" title="Send Query">
+        <svg viewBox="0 0 24 24">
+          <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+        </svg>
+      </button>
+    </form>
+    <div class="psg-footer-disclaimer">
+      🔒 PSG Tech Official Assistant • Role-Governed Access
+    </div>
+  </div>
+
+</div>
