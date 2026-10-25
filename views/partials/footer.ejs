@@ -1,44 +1,95 @@
-  <!-- FOOTER -->
-  <footer>
-    <div class="container">
+  <!-- FOOTER SEPARATOR LINE -->
+  <div class="tg-lineseparator"></div>
+
+  <!-- FOOTER (OFFICIAL PSGTECH.EDU STRUCTURE) -->
+  <footer class="tg-footer">
+    <div class="container-fluid px-lg-5">
       <div class="row g-4">
-        <div class="col-md-4">
-          <h5>PSG College of Technology</h5>
-          <p class="small text-light">An autonomous institution having over 70 years of established legacy in engineering, research, and holistic education.</p>
+        
+        <!-- COLUMN 1: COLLEGE INFO & ADDRESS -->
+        <div class="col-lg-3 col-md-6">
+          <div class="mb-3">
+            <img src="https://www.psgtech.edu/images/logo.png" alt="PSG Tech Logo" style="max-height: 52px; background: white; padding: 4px 8px; border-radius: 4px;">
+          </div>
+          <address class="small text-secondary mb-3" style="line-height: 1.6;">
+            <strong>PSG College of Technology</strong><br>
+            Post Box No. 1611<br>
+            Peelamedu, Coimbatore - 641004<br>
+            Tamil Nadu, India.
+          </address>
+          <div class="small text-secondary mb-1">
+            <strong>📞 Phone:</strong> 0422-2572177, 2572477, 4344777
+          </div>
+          <div class="small text-secondary mb-1">
+            <strong>📠 Fax:</strong> 0422-2592277
+          </div>
           <div class="small text-secondary">
-            Post Box No. 1611, Peelamedu,<br>
-            Coimbatore - 641004, Tamil Nadu, India.
+            <strong>✉️ Email:</strong> principal@psgtech.edu
           </div>
         </div>
-        <div class="col-md-3">
-          <h5>Quick Portals</h5>
-          <ul class="list-unstyled small">
-            <li><a href="/academics">Syllabus & Curriculum</a></li>
-            <li><a href="/admissions">Admissions & Fees</a></li>
-            <li><a href="/forms">Online Form Filling (Bonafide)</a></li>
-            <li><a href="/facilities">Hostel & Library</a></li>
+
+        <!-- COLUMN 2: QUICK RESOURCES -->
+        <div class="col-lg-3 col-md-6">
+          <h4>My PSG Resources</h4>
+          <ul>
+            <li><a href="/facilities">Dr. G.R.D. Memorial Library</a></li>
+            <li><a href="#">PSG Community Radio 107.8 MHz</a></li>
+            <li><a href="/about">NIRF Rankings & NAAC A+ Status</a></li>
+            <li><a href="#">Mandatory Committees & Disclosures</a></li>
+            <li><a href="#">Internal Quality Assurance Cell (IQAC)</a></li>
+            <li><a href="#">Anti-Ragging Committee & Helpline</a></li>
           </ul>
         </div>
-        <div class="col-md-5">
-          <h5>PSG Nexus AI Campus Support</h5>
-          <p class="small">Experience continuous assistance across all pages. Our smart assistant answers role-specific queries, provides instant navigation, and protects confidential staff documents.</p>
-          <div class="p-2 rounded bg-dark border border-secondary small text-warning font-monospace">
-            💡 Pro-Tip: Open the assistant at the bottom right and say: <em>"take me to form filling page"</em>
-          </div>
+
+        <!-- COLUMN 3: ACADEMICS & SERVICES -->
+        <div class="col-lg-3 col-md-6">
+          <h4>Academics & Services</h4>
+          <ul>
+            <li><a href="/academics">Autonomous Programmes (UG/PG)</a></li>
+            <li><a href="/academics">Curriculum & Syllabus Downloads</a></li>
+            <li><a href="/admissions">Admissions & TNEA Cutoffs</a></li>
+            <li><a href="/forms">Online Form Filling (Bonafide/Passes)</a></li>
+            <li><a href="/facilities">Campus Hostels & Timings</a></li>
+            <li><a href="/contact">Campus Helpdesk & Extensions</a></li>
+          </ul>
         </div>
+
+        <!-- COLUMN 4: CAMPUS PORTALS & MONGODB LOGS -->
+        <div class="col-lg-3 col-md-6">
+          <h4>Institutional Portals</h4>
+          <ul>
+            <li><a href="#">PSG Webmail (psgtech.ac.in)</a></li>
+            <li><a href="/forms">Studzone (Student Services)</a></li>
+            <li><a href="#">Parentzone Portal</a></li>
+            <li><a href="#">Alumni Network (Laudea)</a></li>
+            <li class="mt-2 pt-2 border-top border-secondary">
+              <a href="/api/conversations" target="_blank" class="text-warning">
+                🗄️ View Local MongoDB Compass Logs &rarr;
+              </a>
+            </li>
+          </ul>
+        </div>
+
       </div>
-      <div class="copyright-bar text-center">
-        © 2026 PSG College of Technology. Developed by Karthikeyan, Laxman, and Basith (Web App Development Semester Project).
+
+      <!-- COPYRIGHT FOOTER BAR -->
+      <div class="tg-footer-copyright">
+        <div>
+          Copyright © 2026 PSG College of Technology. All Rights Reserved. Managed under PSG & Sons' Charities.
+        </div>
+        <div>
+          Semester Project: <strong>PSG Nexus AI</strong> • Built by <strong>Karthikeyan, Laxman, Basith</strong>
+        </div>
       </div>
     </div>
   </footer>
 
-  <!-- PERSISTENT CHATBOT COMPONENT (Survives across page redirects) -->
+  <!-- PERSISTENT CHATBOT COMPONENT (ANCHORED BOTTOM LEFT) -->
   <%- include('chatbot') %>
 
   <!-- Bootstrap 5 Bundle JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- Client-Side Chatbot Logic & Session Storage Sync -->
+  <!-- Client-Side Chatbot Logic & Session Storage Engine -->
   <script src="/js/chatbot.js"></script>
 </body>
 </html>

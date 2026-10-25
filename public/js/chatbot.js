@@ -1,6 +1,7 @@
 /**
  * PSG NEXUS - Client-Side Intelligent Chatbot & Cross-Page Persistence Engine
- * Authors: Karthikeyan, Laxman, Basith
+ * Position: Bottom-Left | Default Role: Student (with all roles switchable)
+ * Local MongoDB Storage enabled via Express /api/chat
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -14,11 +15,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const chatInput = document.getElementById('psg-chat-input');
   const roleBadge = document.getElementById('psg-active-role-badge');
   const switchRoleBtn = document.getElementById('psg-switch-role-btn');
-  const onboardingContainer = document.getElementById('psg-onboarding-container');
+  const roleModalContainer = document.getElementById('psg-role-modal-container');
 
-  // State in Memory
-  let activeRole = sessionStorage.getItem('psg_chat_role') || null;
-  let userDetails = JSON.parse(sessionStorage.getItem('psg_chat_details') || '{}');
+  // State in Memory: Student is default!
+  let activeRole = sessionStorage.getItem('psg_chat_role') || 'student';
+  let userDetails = JSON.parse(sessionStorage.getItem('psg_chat_details') || '{"rollNo":"26MX101","dept":"Computer Applications"}');
   let messages = JSON.parse(sessionStorage.getItem('psg_chat_messages') || '[]');
   let isOpen = sessionStorage.getItem('psg_chat_isOpen') === 'true';
 
@@ -26,17 +27,12 @@ document.addEventListener('DOMContentLoaded', () => {
   // INITIALIZATION ON PAGE LOAD
   // =========================================================================
   function initChatbot() {
-    updateRoleUI();
+    updateRoleBadge();
 
-    if (activeRole) {
-      if (onboardingContainer) onboardingContainer.style.display = 'none';
-      if (messages.length === 0) {
-        addInitialWelcomeMessage();
-      } else {
-        renderAllMessages();
-      }
+    if (messages.length === 0) {
+      addInitialWelcomeMessage();
     } else {
-      showOnboardingCard();
+      renderAllMessages();
     }
 
     if (isOpen) {
@@ -52,9 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
     isOpen = true;
     sessionStorage.setItem('psg_chat_isOpen', 'true');
     scrollToBottom();
-    if (activeRole) {
-      setTimeout(() => chatInput.focus(), 200);
-    }
+    setTimeout(() => chatInput.focus(), 200);
   }
 
   function closeChat() {
@@ -75,135 +69,56 @@ document.addEventListener('DOMContentLoaded', () => {
   if (minimizeBtn) minimizeBtn.addEventListener('click', closeChat);
 
   // =========================================================================
-  // ROLE ONBOARDING MANAGEMENT
+  // ROLE MANAGEMENT (Student default, all roles switchable)
   // =========================================================================
-  function updateRoleUI() {
-    if (activeRole) {
-      roleBadge.textContent = activeRole.toUpperCase();
-      roleBadge.className = `psg-role-tag role-${activeRole}`;
-    } else {
-      roleBadge.textContent = 'GUEST';
-    }
+  function updateRoleBadge() {
+    roleBadge.textContent = activeRole.toUpperCase();
+    sessionStorage.setItem('psg_chat_role', activeRole);
   }
 
-  function showOnboardingCard() {
-    if (!onboardingContainer) return;
-    onboardingContainer.style.display = 'block';
-    onboardingContainer.innerHTML = `
-      <div class="psg-onboarding-card">
-        <div class="psg-onboarding-title">Welcome to PSG Nexus</div>
-        <div class="psg-onboarding-sub">Select your institutional role to personalize answers & access privileges:</div>
-        
-        <div class="psg-role-selector-grid">
-          <button type="button" class="psg-role-btn active" data-role="student">👨‍🎓 Student</button>
-          <button type="button" class="psg-role-btn" data-role="faculty">👨‍🏫 Faculty / Staff</button>
-          <button type="button" class="psg-role-btn" data-role="parent">👨‍👩‍👧 Parent</button>
-          <button type="button" class="psg-role-btn" data-role="visitor">🌐 Visitor / Alumni</button>
+  function showRoleSelector() {
+    if (!roleModalContainer) return;
+    roleModalContainer.style.display = 'block';
+    roleModalContainer.innerHTML = `
+      <div class="psg-role-selector-card">
+        <h5>Institutional Role Selector</h5>
+        <div class="small text-muted">Currently active: <strong>${activeRole.toUpperCase()}</strong>. You can switch to test role permissions:</div>
+        <div class="psg-role-grid">
+          <button type="button" class="psg-role-item-btn ${activeRole === 'student' ? 'active' : ''}" data-role="student">👨‍🎓 Student</button>
+          <button type="button" class="psg-role-item-btn ${activeRole === 'faculty' ? 'active' : ''}" data-role="faculty">👨‍🏫 Faculty / Staff</button>
+          <button type="button" class="psg-role-item-btn ${activeRole === 'parent' ? 'active' : ''}" data-role="parent">👨‍👩‍👧 Parent</button>
+          <button type="button" class="psg-role-item-btn ${activeRole === 'visitor' ? 'active' : ''}" data-role="visitor">🌐 Visitor / Alumni</button>
         </div>
-
-        <div id="psg-role-fields">
-          <div class="psg-details-group">
-            <label>Roll Number (e.g., 26MX101):</label>
-            <input type="text" id="input-roll-no" placeholder="Enter roll number" value="${userDetails.rollNo || ''}">
-          </div>
-          <div class="psg-details-group">
-            <label>Department:</label>
-            <select id="input-dept">
-              <option value="Computer Applications (MCA)">Computer Applications (MCA)</option>
-              <option value="Computer Science & Engg (CSE)">Computer Science & Engg (CSE)</option>
-              <option value="Information Technology (IT)">Information Technology (IT)</option>
-              <option value="Mechanical Engg">Mechanical Engg</option>
-              <option value="Electrical & Electronics (EEE)">Electrical & Electronics (EEE)</option>
-            </select>
-          </div>
+        <div class="text-end">
+          <button type="button" class="btn btn-sm btn-outline-secondary" id="psg-cancel-role-switch">Done</button>
         </div>
-
-        <button type="button" class="psg-start-btn" id="psg-confirm-role-btn">Access PSG Nexus</button>
       </div>
     `;
 
-    // Role button listeners
-    const roleBtns = onboardingContainer.querySelectorAll('.psg-role-btn');
-    let selectedRole = 'student';
-
-    roleBtns.forEach(btn => {
+    const btns = roleModalContainer.querySelectorAll('.psg-role-item-btn');
+    btns.forEach(btn => {
       btn.addEventListener('click', () => {
-        roleBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        selectedRole = btn.getAttribute('data-role');
-        renderRoleFields(selectedRole);
+        activeRole = btn.getAttribute('data-role');
+        updateRoleBadge();
+        roleModalContainer.style.display = 'none';
+
+        // Add a notification in chat
+        appendBotMessage(`Switched active session to **${activeRole.toUpperCase()}**. Responses and document permissions are now tailored to this role.`);
       });
     });
 
-    const confirmBtn = document.getElementById('psg-confirm-role-btn');
-    confirmBtn.addEventListener('click', () => {
-      activeRole = selectedRole;
-      sessionStorage.setItem('psg_chat_role', activeRole);
-
-      if (activeRole === 'student') {
-        const roll = document.getElementById('input-roll-no')?.value || '26MX101';
-        const dept = document.getElementById('input-dept')?.value || 'MCA';
-        userDetails = { rollNo: roll, dept: dept };
-      } else if (activeRole === 'faculty') {
-        const staffId = document.getElementById('input-staff-id')?.value || 'PSG-FAC-404';
-        userDetails = { staffId: staffId, dept: 'Computing' };
-      } else {
-        const name = document.getElementById('input-name')?.value || 'Campus Guest';
-        userDetails = { name: name };
-      }
-
-      sessionStorage.setItem('psg_chat_details', JSON.stringify(userDetails));
-      updateRoleUI();
-      onboardingContainer.style.display = 'none';
-
-      if (messages.length === 0) {
-        addInitialWelcomeMessage();
-      } else {
-        renderAllMessages();
-      }
+    document.getElementById('psg-cancel-role-switch')?.addEventListener('click', () => {
+      roleModalContainer.style.display = 'none';
     });
-  }
-
-  function renderRoleFields(role) {
-    const fieldsContainer = document.getElementById('psg-role-fields');
-    if (!fieldsContainer) return;
-
-    if (role === 'student') {
-      fieldsContainer.innerHTML = `
-        <div class="psg-details-group">
-          <label>Roll Number (e.g., 26MX101):</label>
-          <input type="text" id="input-roll-no" placeholder="Enter roll number" value="26MX101">
-        </div>
-        <div class="psg-details-group">
-          <label>Department:</label>
-          <select id="input-dept">
-            <option value="Computer Applications (MCA)">Computer Applications (MCA)</option>
-            <option value="Computer Science & Engg (CSE)">Computer Science & Engg (CSE)</option>
-            <option value="Information Technology (IT)">Information Technology (IT)</option>
-            <option value="Mechanical Engg">Mechanical Engg</option>
-          </select>
-        </div>
-      `;
-    } else if (role === 'faculty') {
-      fieldsContainer.innerHTML = `
-        <div class="psg-details-group">
-          <label>Staff ID (e.g., PSG-FAC-102):</label>
-          <input type="text" id="input-staff-id" placeholder="Enter staff identifier" value="PSG-FAC-102">
-        </div>
-      `;
-    } else {
-      fieldsContainer.innerHTML = `
-        <div class="psg-details-group">
-          <label>Your Name:</label>
-          <input type="text" id="input-name" placeholder="Enter your full name" value="Guest">
-        </div>
-      `;
-    }
   }
 
   if (switchRoleBtn) {
     switchRoleBtn.addEventListener('click', () => {
-      showOnboardingCard();
+      if (roleModalContainer.style.display === 'block') {
+        roleModalContainer.style.display = 'none';
+      } else {
+        showRoleSelector();
+      }
     });
   }
 
@@ -211,23 +126,14 @@ document.addEventListener('DOMContentLoaded', () => {
   // MESSAGE RENDERING & SESSION PERSISTENCE
   // =========================================================================
   function addInitialWelcomeMessage() {
-    let welcomeText = `Hello! I am PSG Nexus, your official AI campus assistant for PSG College of Technology.`;
-    
-    if (activeRole === 'student') {
-      welcomeText += `\n\nWelcome back, **${userDetails.rollNo || 'Student'}** (${userDetails.dept || 'Engineering'}). You have authenticated access to syllabi, academic calendars, and online form applications.`;
-    } else if (activeRole === 'faculty') {
-      welcomeText += `\n\nGreetings, Faculty Member (**${userDetails.staffId || 'Staff'}**). You have authorized access to internal circulars, syllabus revision memos, and staff leave portals.`;
-    } else if (activeRole === 'parent') {
-      welcomeText += `\n\nWelcome to the PSG Tech Parent Portal. How can I assist you with fee schedules, hostel amenities, or academic schedules today?`;
-    } else {
-      welcomeText += `\n\nWelcome to PSG Tech! Feel free to ask about admissions, TNEA cutoffs, departments, or campus facilities.`;
-    }
+    let welcomeText = `Hello! I am **PSG Nexus**, your official AI campus assistant for PSG College of Technology.\n\nI am here to guide you with syllabus details, examination rules, hostel timings, fees, and campus navigation.`;
 
     const defaultChips = [
       'Take me to form filling page',
-      'Show B.E. Syllabus',
-      'Admissions & Fees',
-      'Hostel timings'
+      'What is the minimum attendance?',
+      'Continuous Assessment marks',
+      'Hostel in-times',
+      'Show B.E. / MCA Syllabus'
     ];
 
     appendBotMessage(welcomeText, 'normal', null, null, defaultChips);
@@ -265,8 +171,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function renderAllMessages() {
     chatBody.innerHTML = '';
-    if (onboardingContainer && onboardingContainer.style.display !== 'none') {
-      chatBody.appendChild(onboardingContainer);
+    if (roleModalContainer) {
+      chatBody.appendChild(roleModalContainer);
     }
     messages.forEach(msg => renderSingleMessage(msg));
     scrollToBottom();
@@ -286,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="psg-redirect-banner">
           <div class="psg-redirect-spinner"></div>
           <div>
-            <strong>Navigating:</strong> Loading ${escapeHtml(msg.redirectName || msg.redirectUrl)}...
+            <strong>Navigating:</strong> Opening ${escapeHtml(msg.redirectName || msg.redirectUrl)}...
           </div>
         </div>
       `;
@@ -310,7 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ${chipsHtml}
     `;
 
-    // Attach chip click listeners
+    // Chip click handler
     const chipBtns = msgDiv.querySelectorAll('.psg-chip');
     chipBtns.forEach(btn => {
       btn.addEventListener('click', () => {
@@ -372,16 +278,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // =========================================================================
-  // SEND QUERY TO BACKEND
+  // QUERY HANDLING & MONGODB SYNC
   // =========================================================================
   async function handleUserQuery(query) {
     if (!query || query.trim() === '') return;
-
-    if (!activeRole) {
-      openChat();
-      showOnboardingCard();
-      return;
-    }
 
     appendUserMessage(query);
     showTypingIndicator();
@@ -409,9 +309,8 @@ document.addEventListener('DOMContentLoaded', () => {
         data.suggestedQuestions || []
       );
 
-      // AUTOMATIC REDIRECTION WITH ACTIVE SESSION
+      // AUTOMATIC REDIRECTION
       if (data.redirectUrl && data.redirectUrl !== window.location.pathname) {
-        // Ensure state is locked in sessionStorage before page transition
         sessionStorage.setItem('psg_chat_isOpen', 'true');
         saveMessagesToStorage();
 
@@ -423,13 +322,13 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (error) {
       hideTypingIndicator();
       appendBotMessage(
-        '⚠️ Could not connect to the campus server. Please check if your Node server is running.',
+        '⚠️ Could not connect to the campus server. Please verify your Node.js server is running.',
         'error'
       );
     }
   }
 
-  // Handle Chat Form Submit
+  // Form Submit Listener
   chatForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const query = chatInput.value.trim();
@@ -443,7 +342,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const resetChatBtn = document.getElementById('psg-reset-chat-btn');
   if (resetChatBtn) {
     resetChatBtn.addEventListener('click', () => {
-      if (confirm('Clear chat history for this session?')) {
+      if (confirm('Clear conversation history?')) {
         messages = [];
         sessionStorage.removeItem('psg_chat_messages');
         renderAllMessages();
@@ -452,6 +351,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Run initialization
+  // Run initial setup
   initChatbot();
 });

@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
+const mongoose = require('mongoose');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -15,6 +16,33 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+// =========================================================================
+// MONGODB LOCAL STORAGE INTEGRATION (Viewable in MongoDB Compass)
+// =========================================================================
+const MONGO_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/psgnexus_db';
+
+const conversationSchema = new mongoose.Schema({
+  role: { type: String, default: 'student' },
+  userMessage: { type: String, required: true },
+  botReply: { type: String, required: true },
+  status: { type: String, default: 'success' },
+  redirectUrl: { type: String, default: null },
+  currentPage: { type: String, default: '/' },
+  timestamp: { type: Date, default: Date.now }
+});
+
+const Conversation = mongoose.model('Conversation', conversationSchema);
+
+let isMongoConnected = false;
+mongoose.connect(MONGO_URI)
+  .then(() => {
+    isMongoConnected = true;
+    console.log('✓ Connected to Local MongoDB Compass at mongodb://127.0.0.1:27017/psgnexus_db');
+  })
+  .catch((err) => {
+    console.warn('⚠️ Local MongoDB connection pending. Check if MongoDB service is started.', err.message);
+  });
+
 // Load Knowledge Base & Permissions
 const knowledgeBase = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'knowledgeBase.json'), 'utf-8'));
 const permissions = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'permissions.json'), 'utf-8'));
@@ -25,48 +53,61 @@ if (process.env.GEMINI_API_KEY && process.env.GEMINI_API_KEY.trim() !== '') {
   try {
     const { GoogleGenAI } = require('@google/genai');
     geminiAI = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY.trim() });
-    console.log('✓ Gemini AI initialized successfully.');
+    console.log('✓ Google Gemini AI initialized successfully.');
   } catch (err) {
-    console.log('ℹ Gemini SDK not configured or key invalid. Local fallback active.');
+    console.log('ℹ Gemini SDK key check failed. Running on local campus engine.');
   }
 } else {
-  console.log('ℹ No GEMINI_API_KEY found in .env. Running on built-in PSG Campus AI Engine (100% offline-ready).');
+  console.log('ℹ No GEMINI_API_KEY configured yet. Running on built-in PSG Campus AI Engine.');
 }
 
-// ========================
-// PAGE ROUTES (PSG TECH DUMMY PORTAL)
-// ========================
+// =========================================================================
+// PAGE ROUTES (MATCHING OFFICIAL PSGTECH.EDU PORTAL)
+// =========================================================================
 app.get('/', (req, res) => {
-  res.render('home', { title: 'PSG College of Technology | Official Portal', currentPage: '/' });
+  res.render('home', { title: 'PSG College of Technology', currentPage: '/' });
 });
 
 app.get('/about', (req, res) => {
-  res.render('about', { title: 'About Us | PSG Tech', currentPage: '/about' });
+  res.render('about', { title: 'About Us | PSG College of Technology', currentPage: '/about' });
 });
 
 app.get('/academics', (req, res) => {
-  res.render('academics', { title: 'Academics & Syllabus | PSG Tech', currentPage: '/academics' });
+  res.render('academics', { title: 'Academics & Syllabus | PSG College of Technology', currentPage: '/academics' });
 });
 
 app.get('/admissions', (req, res) => {
-  res.render('admissions', { title: 'Admissions & Fee Structure | PSG Tech', currentPage: '/admissions' });
+  res.render('admissions', { title: 'Admissions 2026 | PSG College of Technology', currentPage: '/admissions' });
 });
 
 app.get('/forms', (req, res) => {
-  res.render('forms', { title: 'Online Form Filling & Student Services | PSG Tech', currentPage: '/forms' });
+  res.render('forms', { title: 'Online Form Filling Portal | PSG College of Technology', currentPage: '/forms' });
 });
 
 app.get('/facilities', (req, res) => {
-  res.render('facilities', { title: 'Campus Facilities & Hostels | PSG Tech', currentPage: '/facilities' });
+  res.render('facilities', { title: 'Campus Facilities & Hostels | PSG College of Technology', currentPage: '/facilities' });
 });
 
 app.get('/contact', (req, res) => {
-  res.render('contact', { title: 'Contact & Helpdesk | PSG Tech', currentPage: '/contact' });
+  res.render('contact', { title: 'Contact | PSG College of Technology', currentPage: '/contact' });
 });
 
-// ========================
-// CHATBOT API ENGINE
-// ========================
+// View saved MongoDB conversations directly in browser
+app.get('/api/conversations', async (req, res) => {
+  try {
+    if (!isMongoConnected) {
+      return res.json({ message: 'MongoDB is connecting or offline.', data: [] });
+    }
+    const logs = await Conversation.find().sort({ timestamp: -1 }).limit(50);
+    res.json({ total: logs.length, database: 'psgnexus_db', collection: 'conversations', logs });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// =========================================================================
+// CHATBOT API ENGINE & MONGODB STORAGE
+// =========================================================================
 app.post('/api/chat', async (req, res) => {
   try {
     const { message, role, userDetails, currentPage } = req.body;
@@ -76,71 +117,82 @@ app.post('/api/chat', async (req, res) => {
     }
 
     const cleanMsg = message.trim().toLowerCase();
-    const activeRole = (role || 'visitor').toLowerCase();
+    const activeRole = (role || 'student').toLowerCase();
+
+    let responsePayload = null;
 
     // ------------------------------------------------------------------
     // GUARDRAIL 1: Strictly Bound Within College Limits (Out-of-Scope)
     // ------------------------------------------------------------------
     const isOutOfScope = checkOutOfScope(cleanMsg);
     if (isOutOfScope) {
-      return res.json({
+      responsePayload = {
         status: 'out_of_scope',
-        reply: 'I am PSG Nexus, an AI assistant dedicated exclusively to PSG College of Technology queries (academics, admissions, facilities, and campus administration). Please ask questions related to PSG Tech.'
-      });
+        reply: 'I am PSG Nexus, an AI assistant dedicated exclusively to PSG College of Technology queries (academics, admissions, facilities, and campus administration). Please ask questions related to PSG Tech.',
+        redirectUrl: null
+      };
     }
 
     // ------------------------------------------------------------------
     // GUARDRAIL 2: Role-Based Access Control (RBAC) & Document Security
     // ------------------------------------------------------------------
-    const restriction = checkDocumentRestriction(cleanMsg, activeRole);
-    if (restriction.restricted) {
-      return res.json({
-        status: 'restricted',
-        reply: restriction.message,
-        role: activeRole
-      });
+    if (!responsePayload) {
+      const restriction = checkDocumentRestriction(cleanMsg, activeRole);
+      if (restriction.restricted) {
+        responsePayload = {
+          status: 'restricted',
+          reply: restriction.message,
+          redirectUrl: null,
+          role: activeRole
+        };
+      }
     }
 
     // ------------------------------------------------------------------
     // ACTION 3: Automatic Page Redirection Detection
     // ------------------------------------------------------------------
-    const redirectAction = checkNavigationRedirect(cleanMsg, currentPage);
-    if (redirectAction) {
-      return res.json({
-        status: 'redirect',
-        reply: redirectAction.reply,
-        redirectUrl: redirectAction.url,
-        redirectName: redirectAction.name,
-        redirectDelay: 1800,
-        role: activeRole
-      });
+    if (!responsePayload) {
+      const redirectAction = checkNavigationRedirect(cleanMsg, currentPage);
+      if (redirectAction) {
+        responsePayload = {
+          status: 'redirect',
+          reply: redirectAction.reply,
+          redirectUrl: redirectAction.url,
+          redirectName: redirectAction.name,
+          redirectDelay: 1800,
+          role: activeRole
+        };
+      }
     }
 
     // ------------------------------------------------------------------
     // ACTION 4: Role-Specific Answers from Campus Knowledge Base
     // ------------------------------------------------------------------
-    const localMatch = findLocalFAQ(cleanMsg, activeRole);
-    if (localMatch) {
-      return res.json({
-        status: 'success',
-        reply: localMatch.answer,
-        redirectUrl: localMatch.redirect || null,
-        redirectDelay: localMatch.redirect ? 2000 : null,
-        role: activeRole
-      });
+    if (!responsePayload) {
+      const localMatch = findLocalFAQ(cleanMsg, activeRole);
+      if (localMatch) {
+        responsePayload = {
+          status: 'success',
+          reply: localMatch.answer,
+          redirectUrl: localMatch.redirect || null,
+          redirectDelay: localMatch.redirect ? 2000 : null,
+          role: activeRole
+        };
+      }
     }
 
     // ------------------------------------------------------------------
     // ACTION 5: Generative AI (Gemini) if API Key is configured
     // ------------------------------------------------------------------
-    if (geminiAI) {
+    if (!responsePayload && geminiAI) {
       try {
         const aiResponse = await generateGeminiReply(message, activeRole, userDetails, currentPage);
-        return res.json({
+        responsePayload = {
           status: 'success',
           reply: aiResponse,
+          redirectUrl: null,
           role: activeRole
-        });
+        };
       } catch (aiErr) {
         console.error('Gemini API call failed, falling back to local reasoning:', aiErr.message);
       }
@@ -149,13 +201,32 @@ app.post('/api/chat', async (req, res) => {
     // ------------------------------------------------------------------
     // ACTION 6: Intelligent Default Campus Guidance
     // ------------------------------------------------------------------
-    const smartFallback = generateCampusFallback(cleanMsg, activeRole);
-    return res.json({
-      status: 'success',
-      reply: smartFallback.reply,
-      suggestedQuestions: smartFallback.suggestions,
-      role: activeRole
-    });
+    if (!responsePayload) {
+      const smartFallback = generateCampusFallback(cleanMsg, activeRole);
+      responsePayload = {
+        status: 'success',
+        reply: smartFallback.reply,
+        suggestedQuestions: smartFallback.suggestions,
+        redirectUrl: null,
+        role: activeRole
+      };
+    }
+
+    // ------------------------------------------------------------------
+    // PERSIST TO MONGODB COMPASS (Local Storage)
+    // ------------------------------------------------------------------
+    if (isMongoConnected) {
+      Conversation.create({
+        role: activeRole,
+        userMessage: message.trim(),
+        botReply: responsePayload.reply,
+        status: responsePayload.status,
+        redirectUrl: responsePayload.redirectUrl || null,
+        currentPage: currentPage || '/'
+      }).catch(err => console.error('Failed to save to MongoDB:', err.message));
+    }
+
+    return res.json(responsePayload);
 
   } catch (error) {
     console.error('Error in /api/chat:', error);
@@ -241,7 +312,6 @@ function checkNavigationRedirect(msg, currentPage) {
 
   for (const nav of navigationTriggers) {
     if (nav.keywords.some(k => msg.includes(k))) {
-      // Avoid redundant redirect if already on that exact page
       if (currentPage === nav.url) {
         return null;
       }
@@ -269,7 +339,7 @@ function generateCampusFallback(msg, role) {
 
   switch (role) {
     case 'student':
-      roleGreeting = 'As a registered PSG Tech student, I can assist you with:';
+      roleGreeting = 'Hello, PSG Tech Student! Here is what I can assist you with right now:';
       suggestions = [
         'Take me to form filling page',
         'Download B.E./B.Tech Syllabus',
@@ -304,7 +374,7 @@ function generateCampusFallback(msg, role) {
   }
 
   return {
-    reply: `${roleGreeting}\n• You can ask about course syllabi, fee structures, admissions, and campus facilities.\n• You can also ask me to automatically redirect you anywhere (e.g., "take me to form filling page").`,
+    reply: `${roleGreeting}\n• You can ask about course syllabi, CAT marks, attendance criteria, and hostel rules.\n• You can also ask me to automatically redirect you anywhere (e.g., "take me to form filling page").`,
     suggestions: suggestions
   };
 }
@@ -341,6 +411,6 @@ app.listen(PORT, () => {
   console.log(`=================================================`);
   console.log(`🚀 PSG Nexus Server is running on http://localhost:${PORT}`);
   console.log(`🎓 Team: Karthikeyan, Laxman, Basith`);
-  console.log(`📌 Web App Development Project - PSG College of Tech`);
+  console.log(`🗄️ Local MongoDB: mongodb://127.0.0.1:27017/psgnexus_db`);
   console.log(`=================================================`);
 });

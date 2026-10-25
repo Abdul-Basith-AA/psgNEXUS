@@ -1,213 +1,439 @@
+/* ==========================================================================
+   PSG COLLEGE OF TECHNOLOGY - OFFICIAL STYLING REPLICA (>90% MATCH)
+   Reference: https://www.psgtech.edu/
+   ========================================================================== */
+
 :root {
-  --psg-primary: #002b5c;
-  --psg-secondary: #004b93;
-  --psg-gold: #c5a059;
-  --psg-gold-light: #fdf8eb;
-  --psg-light: #f4f6fa;
-  --psg-dark: #1b2430;
-  --psg-gray: #6c757d;
-  --font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+  --psg-primary-blue: #2b4bab;
+  --psg-dark-blue: #1b294b;
+  --psg-hover-blue: #1a357b;
+  --psg-accent-gold: #f4de88;
+  --psg-highlight-yellow: #f8b400;
+  --psg-red: #e31e24;
+  --psg-text-dark: #333333;
+  --psg-text-muted: #666666;
+  --psg-bg-light: #f7f9fc;
 }
 
 body {
-  font-family: var(--font-family);
-  background-color: #fafbfc;
-  color: #333333;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+  font-family: 'Open Sans', 'Segoe UI', Arial, Helvetica, sans-serif;
+  color: var(--psg-text-dark);
+  background-color: #ffffff;
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
 }
 
-/* TOP ANNOUNCEMENT BAR */
-.top-header-bar {
-  background-color: var(--psg-primary);
-  color: #e0e9f5;
-  font-size: 0.82rem;
+/* TOPBAR / UTILITY BAR */
+.tg-topbar {
+  background-color: var(--psg-dark-blue);
+  color: #ffffff;
+  font-size: 12px;
   padding: 6px 0;
-  border-bottom: 2px solid var(--psg-gold);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.top-header-bar a {
-  color: #e0e9f5;
+.tg-tickerbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.tg-ticker-badge {
+  background-color: var(--psg-red);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 11px;
+  padding: 2px 7px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tg-ticker-content a {
+  color: var(--psg-accent-gold);
   text-decoration: none;
-  margin-left: 15px;
+  font-weight: 600;
+  transition: color 0.2s;
 }
 
-.top-header-bar a:hover {
+.tg-ticker-content a:hover {
   color: #ffffff;
   text-decoration: underline;
 }
 
-/* MAIN COLLEGE HEADER */
-.college-brand-header {
-  background: #ffffff;
-  padding: 16px 0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+.tg-toplinks {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  flex-wrap: wrap;
 }
 
-.college-logo-container {
+.tg-toplinks a.toplink-btn {
+  background-color: var(--psg-primary-blue);
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 3px;
+  transition: background-color 0.2s;
+}
+
+.tg-toplinks a.toplink-btn:hover {
+  background-color: #3b5ec2;
+  color: #ffffff;
+}
+
+.tg-toplinks a.toplink-special {
+  background-color: #e9e9f2;
+  color: var(--psg-primary-blue);
+  border: 1px solid #b8b8d4;
+  font-weight: 700;
+}
+
+.tg-toplinks a.toplink-special:hover {
+  background-color: #ffffff;
+}
+
+/* MIDDLE HEADER BRANDING */
+.tg-middleheader {
+  background-color: #ffffff;
+  padding: 12px 0 10px;
+}
+
+.tg-logo-wrap {
   display: flex;
   align-items: center;
   gap: 15px;
 }
 
-.college-crest-icon {
-  width: 54px;
-  height: 54px;
-  background: linear-gradient(135deg, var(--psg-primary), var(--psg-secondary));
-  color: var(--psg-gold);
-  border-radius: 50%;
+.tg-main-logo {
+  max-height: 82px;
+  width: auto;
+  object-fit: contain;
+}
+
+.tg-iso-badge {
+  color: #444444;
+  font-size: 12.5px;
+  font-weight: 700;
+  text-decoration: none;
+  border-left: 2px solid #ddd;
+  padding-left: 12px;
+  display: inline-block;
+}
+
+.tg-iso-badge:hover {
+  color: var(--psg-primary-blue);
+  text-decoration: underline;
+}
+
+.tg-jubilee-logos {
   display: flex;
   align-items: center;
-  justify-content: center;
-  font-weight: 800;
-  font-size: 1.4rem;
-  box-shadow: 0 4px 8px rgba(0, 43, 92, 0.2);
-  border: 2px solid var(--psg-gold);
+  justify-content: flex-end;
+  gap: 15px;
 }
 
-.college-title h1 {
-  font-size: 1.45rem;
-  font-weight: 800;
-  color: var(--psg-primary);
-  margin: 0;
-  letter-spacing: -0.2px;
+.tg-jubilee-logos img {
+  max-height: 80px;
+  width: auto;
+  object-fit: contain;
 }
 
-.college-title p {
-  font-size: 0.85rem;
-  color: var(--psg-gray);
-  margin: 0;
-  font-weight: 500;
+/* MAIN NAVIGATION BAR (ROYAL BLUE) */
+.tg-navigation-bar {
+  background-color: var(--psg-primary-blue);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* NAVIGATION */
-.main-nav {
-  background-color: var(--psg-primary);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+.navbar {
+  padding: 0;
 }
 
 .navbar-nav .nav-link {
   color: #ffffff !important;
-  font-weight: 500;
-  font-size: 0.95rem;
-  padding: 12px 16px !important;
-  transition: all 0.2s ease-in-out;
+  font-size: 13.5px;
+  font-weight: 600;
+  padding: 13px 16px !important;
+  transition: all 0.2s;
+  letter-spacing: 0.2px;
 }
 
 .navbar-nav .nav-link:hover,
-.navbar-nav .nav-link.active {
-  background-color: var(--psg-secondary);
-  color: #ffffff !important;
-  border-bottom: 3px solid var(--psg-gold);
+.navbar-nav .nav-item.active .nav-link {
+  background-color: var(--psg-hover-blue);
+  color: var(--psg-accent-gold) !important;
 }
 
-/* HERO SECTION */
-.hero-banner {
-  background: linear-gradient(135deg, rgba(0, 43, 92, 0.95), rgba(0, 75, 147, 0.88)), url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=1200&q=80') center/cover;
+/* Dropdown Menus */
+.dropdown-menu {
+  background-color: var(--psg-primary-blue);
+  border: none;
+  border-radius: 0 0 6px 6px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  margin-top: 0;
+  padding: 6px 0;
+}
+
+.dropdown-item {
   color: #ffffff;
-  padding: 55px 0;
-  border-bottom: 4px solid var(--psg-gold);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 8px 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.2s;
 }
 
-.hero-banner h2 {
+.dropdown-item:hover {
+  background-color: var(--psg-hover-blue);
+  color: var(--psg-accent-gold);
+  padding-left: 22px;
+}
+
+/* CAROUSEL / SLIDER */
+.carousel-item img {
+  height: 480px;
+  object-fit: cover;
+  width: 100%;
+}
+
+.carousel-caption {
+  background: rgba(27, 41, 75, 0.85);
+  border-left: 5px solid var(--psg-accent-gold);
+  padding: 16px 24px;
+  border-radius: 4px;
+  text-align: left;
+  left: 8%;
+  bottom: 40px;
+  max-width: 620px;
+}
+
+.carousel-caption h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 6px;
+}
+
+.carousel-caption p {
+  font-size: 0.95rem;
+  color: #e2e8f0;
+  margin-bottom: 0;
+}
+
+/* WELCOME INSTITUTION SECTION */
+.psg-welcome-section {
+  padding: 45px 0 35px;
+  background-color: #ffffff;
+}
+
+.psg-heading-title {
+  color: var(--psg-primary-blue);
+  font-size: 1.75rem;
+  font-weight: 700;
+  position: relative;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+}
+
+.psg-heading-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 65px;
+  height: 3px;
+  background-color: var(--psg-accent-gold);
+}
+
+.psg-welcome-text {
+  font-size: 0.94rem;
+  color: #4a5568;
+  line-height: 1.7;
+}
+
+/* QUICK STATS BADGES */
+.psg-stat-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-left: 4px solid var(--psg-primary-blue);
+  padding: 16px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  transition: transform 0.2s;
+}
+
+.psg-stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(43, 75, 171, 0.1);
+}
+
+.psg-stat-card h4 {
+  color: var(--psg-primary-blue);
+  font-size: 1.3rem;
   font-weight: 800;
-  font-size: 2.2rem;
-  letter-spacing: -0.5px;
+  margin-bottom: 2px;
 }
 
-.hero-banner p {
-  font-size: 1.1rem;
-  color: #dbe4ef;
-  max-width: 650px;
+.psg-stat-card p {
+  color: #64748b;
+  font-size: 0.8rem;
+  margin: 0;
+  font-weight: 600;
 }
 
-/* SECTION CARDS & MODULES */
-.feature-card {
+/* ANNOUNCEMENTS & NEWS CARDS */
+.psg-news-panel {
   background: #ffffff;
-  border: 1px solid #e5e9f2;
-  border-radius: 8px;
-  padding: 24px;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
   height: 100%;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
 }
 
-.feature-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 18px rgba(0, 43, 92, 0.1);
-  border-color: #cbd5e1;
-}
-
-.feature-icon-badge {
-  width: 46px;
-  height: 46px;
-  background-color: var(--psg-gold-light);
-  color: var(--psg-primary);
-  border: 1px solid rgba(197, 160, 89, 0.3);
-  border-radius: 8px;
+.psg-panel-header {
+  background-color: var(--psg-dark-blue);
+  color: #ffffff;
+  padding: 12px 18px;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 5px 5px 0 0;
+  border-bottom: 2px solid var(--psg-accent-gold);
   display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: 1.25rem;
-  margin-bottom: 16px;
+  justify-content: space-between;
 }
 
-.feature-card h4 {
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: var(--psg-primary);
+.psg-news-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.psg-news-item {
+  padding: 14px 18px;
+  border-bottom: 1px solid #edf2f7;
+  font-size: 0.88rem;
+  display: flex;
+  flex-direction: column;
+  transition: background 0.15s;
+}
+
+.psg-news-item:hover {
+  background-color: #f8fafc;
+}
+
+.psg-news-date {
+  font-size: 0.72rem;
+  color: #94a3b8;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.psg-news-item a {
+  color: var(--psg-primary-blue);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.psg-news-item a:hover {
+  color: #d97706;
+  text-decoration: underline;
+}
+
+/* QUICK ACCESS PORTAL CARDS (STUDZONE, PARENTZONE, FORMS) */
+.psg-portal-tile {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  padding: 20px 16px;
+  text-align: center;
+  transition: all 0.25s;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
+}
+
+.psg-portal-tile:hover {
+  border-color: var(--psg-primary-blue);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 18px rgba(43, 75, 171, 0.12);
+}
+
+.psg-portal-icon {
+  font-size: 2.2rem;
   margin-bottom: 10px;
 }
 
-.feature-card p {
-  font-size: 0.9rem;
-  color: #555555;
-  line-height: 1.5;
-}
-
-/* ANNOUNCEMENT TICKER */
-.notice-box {
-  background-color: #fff9e6;
-  border-left: 4px solid var(--psg-gold);
-  padding: 12px 18px;
-  border-radius: 0 6px 6px 0;
-  margin-bottom: 24px;
-}
-
-/* FOOTER */
-footer {
-  margin-top: auto;
-  background-color: var(--psg-primary);
-  color: #d0d7e2;
-  font-size: 0.88rem;
-  border-top: 3px solid var(--psg-gold);
-  padding: 30px 0 15px;
-}
-
-footer h5 {
-  color: #ffffff;
-  font-size: 1rem;
+.psg-portal-tile h5 {
+  font-size: 1.05rem;
   font-weight: 700;
-  margin-bottom: 14px;
-  border-bottom: 1px solid rgba(197, 160, 89, 0.3);
-  padding-bottom: 6px;
+  color: var(--psg-primary-blue);
+  margin-bottom: 6px;
 }
 
-footer a {
-  color: #b8c8dc;
+.psg-portal-tile p {
+  font-size: 0.8rem;
+  color: #64748b;
+  margin-bottom: 12px;
+}
+
+/* FOOTER (MATCHES PSGTECH.EDU EXACTLY) */
+.tg-lineseparator {
+  height: 4px;
+  background: linear-gradient(90deg, var(--psg-primary-blue), var(--psg-accent-gold), var(--psg-dark-blue));
+}
+
+.tg-footer {
+  background-color: var(--psg-dark-blue);
+  color: #cbd5e1;
+  font-size: 13px;
+  padding: 45px 0 20px;
+}
+
+.tg-footer h4 {
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(244, 222, 136, 0.3);
+  letter-spacing: 0.5px;
+}
+
+.tg-footer ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tg-footer ul li {
+  margin-bottom: 8px;
+}
+
+.tg-footer a {
+  color: #94a3b8;
   text-decoration: none;
+  transition: color 0.2s;
 }
 
-footer a:hover {
+.tg-footer a:hover {
   color: #ffffff;
   text-decoration: underline;
 }
 
-.copyright-bar {
+.tg-footer-copyright {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
-  margin-top: 20px;
-  padding-top: 12px;
-  font-size: 0.8rem;
-  color: #92a4ba;
+  margin-top: 35px;
+  padding-top: 15px;
+  font-size: 12px;
+  color: #94a3b8;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
 }

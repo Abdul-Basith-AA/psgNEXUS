@@ -1,64 +1,66 @@
 /* ==========================================================================
-   PSG NEXUS CHATBOT WIDGET STYLING
+   PSG NEXUS CHATBOT WIDGET STYLING - BOTTOM LEFT POSITIONING
    ========================================================================== */
 
-/* FLOATING LAUNCHER BUTTON */
+/* FLOATING LAUNCHER BUTTON (LEFT BOTTOM) */
 #psg-chatbot-launcher {
   position: fixed;
   bottom: 24px;
-  right: 24px;
+  left: 24px;
+  right: auto;
   z-index: 9999;
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #002b5c, #004b93);
-  color: #c5a059;
-  border: 3px solid #c5a059;
-  box-shadow: 0 8px 24px rgba(0, 43, 92, 0.4), 0 0 0 0 rgba(197, 160, 89, 0.5);
+  background: linear-gradient(135deg, #1b294b, #2b4bab);
+  color: #f4de88;
+  border: 3px solid #f4de88;
+  box-shadow: 0 8px 24px rgba(27, 41, 75, 0.45), 0 0 0 0 rgba(244, 222, 136, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  animation: pulse-ring 2.5s infinite;
+  animation: pulse-ring-left 2.5s infinite;
 }
 
 #psg-chatbot-launcher:hover {
   transform: scale(1.08);
-  box-shadow: 0 12px 30px rgba(0, 43, 92, 0.6);
+  box-shadow: 0 12px 30px rgba(27, 41, 75, 0.65);
 }
 
 #psg-chatbot-launcher svg {
   width: 32px;
   height: 32px;
-  fill: #c5a059;
+  fill: #f4de88;
 }
 
-@keyframes pulse-ring {
+@keyframes pulse-ring-left {
   0% {
-    box-shadow: 0 8px 24px rgba(0, 43, 92, 0.4), 0 0 0 0 rgba(197, 160, 89, 0.4);
+    box-shadow: 0 8px 24px rgba(27, 41, 75, 0.4), 0 0 0 0 rgba(244, 222, 136, 0.4);
   }
   70% {
-    box-shadow: 0 8px 24px rgba(0, 43, 92, 0.4), 0 0 0 14px rgba(197, 160, 89, 0);
+    box-shadow: 0 8px 24px rgba(27, 41, 75, 0.4), 0 0 0 14px rgba(244, 222, 136, 0);
   }
   100% {
-    box-shadow: 0 8px 24px rgba(0, 43, 92, 0.4), 0 0 0 0 rgba(197, 160, 89, 0);
+    box-shadow: 0 8px 24px rgba(27, 41, 75, 0.4), 0 0 0 0 rgba(244, 222, 136, 0);
   }
 }
 
-/* LAUNCHER TOOLTIP CALLOUT */
+/* LAUNCHER TOOLTIP CALLOUT (FLOATS TO THE RIGHT OF LAUNCHER) */
 .psg-launcher-tooltip {
   position: absolute;
-  right: 76px;
-  background-color: #002b5c;
+  left: 76px;
+  right: auto;
+  background-color: #1b294b;
   color: #ffffff;
   padding: 6px 14px;
   border-radius: 20px;
   font-size: 0.8rem;
   font-weight: 600;
   white-space: nowrap;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  border: 1px solid #c5a059;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  border: 1px solid #f4de88;
   pointer-events: none;
   animation: float-tooltip 3s ease-in-out infinite;
 }
@@ -68,25 +70,26 @@
   50% { transform: translateY(-4px); }
 }
 
-/* CHATBOT WINDOW CONTAINER */
+/* CHATBOT WINDOW CONTAINER (LEFT BOTTOM) */
 #psg-chatbot-window {
   position: fixed;
-  bottom: 100px;
-  right: 24px;
+  bottom: 96px;
+  left: 24px;
+  right: auto;
   width: 390px;
   max-width: calc(100vw - 32px);
-  height: 580px;
+  height: 570px;
   max-height: calc(100vh - 120px);
   background-color: #ffffff;
   border-radius: 16px;
-  box-shadow: 0 16px 40px rgba(0, 25, 55, 0.25);
+  box-shadow: 0 16px 40px rgba(0, 25, 55, 0.28);
   display: flex;
   flex-direction: column;
   overflow: hidden;
   z-index: 10000;
-  border: 2px solid #002b5c;
+  border: 2px solid #2b4bab;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  transform-origin: bottom right;
+  transform-origin: bottom left;
 }
 
 #psg-chatbot-window.hidden {
@@ -98,13 +101,13 @@
 
 /* CHAT HEADER */
 .psg-chat-header {
-  background: linear-gradient(135deg, #002b5c, #004b93);
+  background: linear-gradient(135deg, #1b294b, #2b4bab);
   color: #ffffff;
-  padding: 14px 16px;
+  padding: 13px 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 2px solid #c5a059;
+  border-bottom: 2px solid #f4de88;
 }
 
 .psg-chat-header-info {
@@ -114,21 +117,21 @@
 }
 
 .psg-chat-avatar {
-  width: 38px;
-  height: 38px;
+  width: 36px;
+  height: 36px;
   background-color: #ffffff;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 800;
-  color: #002b5c;
+  color: #2b4bab;
   font-size: 1.1rem;
-  border: 2px solid #c5a059;
+  border: 2px solid #f4de88;
 }
 
 .psg-chat-header-text h3 {
-  font-size: 1rem;
+  font-size: 0.98rem;
   font-weight: 700;
   margin: 0;
   line-height: 1.2;
@@ -175,10 +178,10 @@
 
 /* ACTIVE ROLE BADGE STRIP */
 .psg-role-strip {
-  background-color: #f1f5fa;
-  padding: 6px 16px;
-  font-size: 0.75rem;
-  color: #002b5c;
+  background-color: #f0f4fa;
+  padding: 7px 16px;
+  font-size: 0.76rem;
+  color: #1b294b;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -186,31 +189,31 @@
 }
 
 .psg-role-tag {
-  background-color: #002b5c;
-  color: #c5a059;
+  background-color: #2b4bab;
+  color: #f4de88;
   font-weight: 700;
-  padding: 2px 8px;
+  padding: 3px 9px;
   border-radius: 12px;
   text-transform: uppercase;
-  font-size: 0.68rem;
+  font-size: 0.7rem;
   letter-spacing: 0.5px;
 }
 
 .psg-switch-role-btn {
   background: none;
   border: none;
-  color: #004b93;
+  color: #2b4bab;
   font-weight: 600;
   text-decoration: underline;
   cursor: pointer;
   padding: 0;
-  font-size: 0.75rem;
+  font-size: 0.76rem;
 }
 
 /* CHAT MESSAGES BODY */
 .psg-chat-body {
   flex: 1;
-  padding: 16px;
+  padding: 14px;
   overflow-y: auto;
   background-color: #fafbfc;
   display: flex;
@@ -222,8 +225,8 @@
 .psg-message {
   display: flex;
   flex-direction: column;
-  max-width: 85%;
-  animation: fade-in 0.25s ease-out;
+  max-width: 86%;
+  animation: fade-in 0.22s ease-out;
 }
 
 @keyframes fade-in {
@@ -250,7 +253,7 @@
 }
 
 .psg-message.user .psg-bubble {
-  background-color: #002b5c;
+  background-color: #2b4bab;
   color: #ffffff;
   border-bottom-right-radius: 2px;
 }
@@ -278,7 +281,7 @@
   padding: 10px 12px;
   margin-top: 8px;
   font-size: 0.82rem;
-  color: #002b5c;
+  color: #1b294b;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -287,7 +290,7 @@
 .psg-redirect-spinner {
   width: 18px;
   height: 18px;
-  border: 2px solid #c5a059;
+  border: 2px solid #2b4bab;
   border-top-color: transparent;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
@@ -326,7 +329,7 @@
 .psg-typing-dot {
   width: 6px;
   height: 6px;
-  background-color: #002b5c;
+  background-color: #2b4bab;
   border-radius: 50%;
   animation: bounce 1.4s infinite ease-in-out;
 }
@@ -349,108 +352,64 @@
 
 .psg-chip {
   background-color: #edf2f8;
-  color: #002b5c;
+  color: #2b4bab;
   border: 1px solid #d0dbe9;
   padding: 4px 10px;
   border-radius: 14px;
-  font-size: 0.75rem;
+  font-size: 0.74rem;
   cursor: pointer;
   transition: all 0.2s;
   font-weight: 500;
 }
 
 .psg-chip:hover {
-  background-color: #002b5c;
-  color: #c5a059;
-  border-color: #002b5c;
+  background-color: #2b4bab;
+  color: #ffffff;
+  border-color: #2b4bab;
 }
 
-/* ONBOARDING ROLE CARD */
-.psg-onboarding-card {
+/* ROLE SELECTOR MODAL IN CHAT */
+.psg-role-selector-card {
   background-color: #ffffff;
-  border: 1px solid #c5a059;
+  border: 1.5px solid #2b4bab;
   border-radius: 12px;
-  padding: 16px;
-  box-shadow: 0 4px 14px rgba(0, 43, 92, 0.08);
+  padding: 14px;
+  box-shadow: 0 4px 14px rgba(43, 75, 171, 0.12);
+  margin-bottom: 10px;
 }
 
-.psg-onboarding-title {
-  font-size: 0.95rem;
+.psg-role-selector-card h5 {
+  font-size: 0.9rem;
   font-weight: 700;
-  color: #002b5c;
+  color: #1b294b;
   margin-bottom: 4px;
 }
 
-.psg-onboarding-sub {
-  font-size: 0.78rem;
-  color: #666666;
-  margin-bottom: 12px;
-}
-
-.psg-role-selector-grid {
+.psg-role-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 8px;
-  margin-bottom: 14px;
+  margin: 10px 0;
 }
 
-.psg-role-btn {
+.psg-role-item-btn {
   background-color: #f8fafc;
   border: 1.5px solid #cbd5e1;
   padding: 8px 6px;
   border-radius: 8px;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 600;
-  color: #002b5c;
+  color: #1b294b;
   cursor: pointer;
   text-align: center;
   transition: all 0.2s;
 }
 
-.psg-role-btn.active,
-.psg-role-btn:hover {
-  background-color: #002b5c;
-  color: #c5a059;
-  border-color: #002b5c;
-}
-
-.psg-details-group {
-  margin-bottom: 10px;
-}
-
-.psg-details-group label {
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: #333333;
-  display: block;
-  margin-bottom: 4px;
-}
-
-.psg-details-group input,
-.psg-details-group select {
-  width: 100%;
-  padding: 7px 10px;
-  font-size: 0.82rem;
-  border: 1px solid #cbd5e1;
-  border-radius: 6px;
-}
-
-.psg-start-btn {
-  width: 100%;
-  background: linear-gradient(135deg, #002b5c, #004b93);
+.psg-role-item-btn.active,
+.psg-role-item-btn:hover {
+  background-color: #2b4bab;
   color: #ffffff;
-  border: none;
-  padding: 9px;
-  border-radius: 6px;
-  font-weight: 700;
-  font-size: 0.85rem;
-  cursor: pointer;
-  border-bottom: 2px solid #c5a059;
-  transition: opacity 0.2s;
-}
-
-.psg-start-btn:hover {
-  opacity: 0.95;
+  border-color: #2b4bab;
 }
 
 /* CHAT FOOTER & INPUT */
@@ -477,16 +436,16 @@
 }
 
 .psg-chat-input:focus {
-  border-color: #002b5c;
-  box-shadow: 0 0 0 2px rgba(0, 43, 92, 0.1);
+  border-color: #2b4bab;
+  box-shadow: 0 0 0 2px rgba(43, 75, 171, 0.15);
 }
 
 .psg-send-btn {
   width: 38px;
   height: 38px;
   border-radius: 50%;
-  background: #002b5c;
-  color: #c5a059;
+  background: #2b4bab;
+  color: #ffffff;
   border: none;
   cursor: pointer;
   display: flex;
@@ -496,14 +455,14 @@
 }
 
 .psg-send-btn:hover {
-  background: #004b93;
+  background: #1b294b;
   transform: scale(1.05);
 }
 
 .psg-send-btn svg {
   width: 18px;
   height: 18px;
-  fill: #c5a059;
+  fill: #ffffff;
 }
 
 .psg-footer-disclaimer {
