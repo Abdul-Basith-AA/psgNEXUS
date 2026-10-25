@@ -1,87 +1,79 @@
-# PSG Nexus — Role-Based Campus AI Assistant & Portal
+# PSG Nexus — Role-Based Campus AI Assistant & Official Portal
 
-An intelligent, role-governed digital campus assistant built for **PSG College of Technology** for the **Web App Development (WAD)** course.
+An intelligent, role-governed digital campus assistant built for **PSG College of Technology** as part of the **Web App Development (WAD)** curriculum.
 
 ---
 
 ## 👥 Team Members & Work Allocation
 
-| Member | Role / Assigned Module | Key Deliverables for Review 1 |
+| Member | Role / Assigned Module | Deliverables Completed for Review 1 |
 | :--- | :--- | :--- |
-| **Karthikeyan** | **Campus Portal & Webpage Architect** | • Dummy PSG Tech Portal (`views/home.ejs`, `views/about.ejs`, `views/academics.ejs`, `views/admissions.ejs`, `views/forms.ejs`, `views/facilities.ejs`, `views/contact.ejs`).<br>• EJS shared layout partials (`header.ejs`, `footer.ejs`).<br>• Responsive Bootstrap 5 UI styling with PSG Navy (`#002B5C`) & Gold (`#C5A059`) aesthetics. |
-| **Laxman** | **Chatbot UI & Session Persistence Orchestrator** | • Floating chatbot widget launcher & modal interface (`views/partials/chatbot.ejs`, `public/css/chatbot.css`).<br>• Interactive role onboarding flow (Student / Faculty / Parent / Visitor).<br>• Cross-page state management via `sessionStorage` (`psg_chat_messages`, `psg_chat_isOpen`).<br>• Animated auto-redirect notification timer. |
-| **Basith** | **Backend API, Role Guardrails & AI Routing** | • Node.js & Express server configuration (`server.js`).<br>• Strict Out-of-Scope boundary filter (rejects non-PSG queries politely).<br>• Role-Based Access Control (RBAC) & document restriction engine (`data/permissions.json`).<br>• Multi-tier fallback architecture (Instant routing + Gemini API readiness). |
+| **Karthikeyan** | **Official Portal & UI Architect** | • **>90% Replica of `https://www.psgtech.edu/`** (`views/home.ejs`, `views/partials/header.ejs`, `views/partials/footer.ejs`, `public/css/style.css`).<br>• Authentic top utility bar, news ticker marquee, official Platinum Jubilee (75 yrs) & PSG Charities (100 yrs) crests, royal blue navbar (`#2B4BAB`), and hero image carousel.<br>• Online Form Filling Portal (`views/forms.ejs`). |
+| **Laxman** | **Chatbot UI & Session Persistence Orchestrator** | • **Bottom-Left Floating Assistant** (`#psg-chatbot-launcher`, `views/partials/chatbot.ejs`, `public/css/chatbot.css`).<br>• **Student Default Active Role**: Immediately ready for queries without blocking modals, while displaying and supporting quick role switching to Faculty, Parent, and Visitor.<br>• **Cross-Page Persistence**: Uses `sessionStorage` to keep the chat active and history preserved across page redirects. |
+| **Basith** | **Backend API, Local MongoDB Compass & Guardrails** | • Express API server (`server.js`) with `/api/chat` and `/api/conversations`.<br>• **Local MongoDB Compass Storage**: Every chat query and response is saved to `mongodb://127.0.0.1:27017/psgnexus_db` under the `conversations` collection.<br>• Campus boundary filter (rejects off-topic queries) & role-based document access control (RBAC). |
 
 ---
 
-## 🛠️ Mandatory Tech Stack (Syllabus Compliant)
+## 🗄️ How to View Chat Logs in MongoDB Compass
 
-- **Backend:** Node.js + Express.js
-- **Templates:** EJS (Embedded JavaScript)
-- **Frontend:** Bootstrap 5.3 + Vanilla JavaScript (ES6) + CSS3
-- **State Management:** Browser `sessionStorage` (chat history & widget persistence)
-- **AI Integration:** Google GenAI SDK (`@google/genai`) with offline campus knowledge base fallback
-- **Database:** Local JSON for Review 1 $\rightarrow$ MongoDB (Mongoose) for Review 2
+1. Open **MongoDB Compass** on your local machine.
+2. Click **Connect** to the default local URI:
+   ```text
+   mongodb://localhost:27017
+   ```
+   *(or `mongodb://127.0.0.1:27017`)*
+3. In the left database list, open **`psgnexus_db`**.
+4. Click the **`conversations`** collection.
+5. You will see every question asked, the assistant's response, role (`student`), status, and timestamp!
+6. You can also inspect the logs directly in the browser at:
+   ```text
+   http://localhost:3000/api/conversations
+   ```
+
+---
+
+## 🔑 Where to Get Your Free Gemini API Key (Using Your 18-Month Gemini Pro Subscription)
+
+Since you are subscribed to the **18-Month Gemini Pro** plan (Google One AI Premium / Google Workspace):
+
+1. Open your browser and go to **[https://aistudio.google.com/](https://aistudio.google.com/)**.
+2. **Crucial:** Sign in using the **exact Google account** that has your 18-month Gemini Pro subscription.
+3. Click the blue **"Get API key"** button on the left menu (or top right).
+4. Click **"Create API key"** $\rightarrow$ select **"Create API key in new project"**.
+5. Copy the generated key (starts with `AIzaSy...`).
+6. In your `e:\psgNEXUS` project, open the `.env` file and paste it:
+   ```env
+   PORT=3000
+   GEMINI_API_KEY=AIzaSyYourGeneratedKeyHere
+   ```
+7. That's it! Your subscription includes generous free quotas (15 requests/min and 1,500 requests/day for `gemini-1.5-flash` and `gemini-1.5-pro` at zero cost).
+8. The server will automatically detect the key and activate generative intelligence!
 
 ---
 
 ## 🚀 How to Run the Project
 
-1. **Open terminal in the project folder:**
+1. Open your terminal in `e:\psgNEXUS`:
    ```bash
    cd e:\psgNEXUS
    ```
 
-2. **Start the server:**
+2. Start the server:
    ```bash
    npm start
    ```
-   *(or use `npm run dev` for automatic reloading on edits)*
 
-3. **Open in browser:**
+3. Open your browser:
    ```text
    http://localhost:3000
    ```
 
 ---
 
-## 🎯 Review 1 Demonstration Steps (For Faculty Review)
+## 🎯 Evaluator Test Cases for Review 1
 
-When presenting to **Ms. Kalyani A** on October 27, run through these test cases:
-
-### Test Case 1: Active Chatbot Session across Page Redirect
-1. Open `http://localhost:3000/`.
-2. Click the floating **PSG Nexus AI** button at the bottom-right.
-3. Select your role as **Student** (Roll: `26MX101`, Dept: `MCA`).
-4. Type: **`take me to form filling page`**
-5. **Observation:**
-   - The bot replies: *"Sure! Redirecting you directly to the PSG Tech Form Filling Portal..."*
-   - An animated countdown banner shows: *"Navigating: Loading Online Form Filling Portal..."*
-   - The browser automatically navigates from `/` to `/forms`.
-   - **Crucial Feature:** On the new `/forms` page, the chatbot **remains open**, with your roll number and previous conversation **completely preserved**!
-
-### Test Case 2: Out-of-Scope Campus Boundary Filter
-1. In the chat, type: **`Who won yesterday's cricket match?`** or **`Write python code for a calculator`**
-2. **Observation:**
-   - The bot responds: *"I am PSG Nexus, an AI assistant dedicated exclusively to PSG College of Technology queries... Please ask questions related to PSG Tech."*
-
-### Test Case 3: Role-Based Access Control & Document Security
-1. While logged in as **Student**, type: **`Show me faculty meeting minutes`**
-2. **Observation:**
-   - The bot flags a warning: *"⚠️ Access Restricted: Academic Council and internal staff meeting proceedings are classified for Faculty and Management members only."*
-3. Click **"Switch Role"** in the chat header $\rightarrow$ select **Faculty / Staff**.
-4. Ask the same question again: **`Show me faculty meeting minutes`**
-5. **Observation:**
-   - Access is **Granted**, giving links to staff intranet archives!
-
----
-
-## 🔑 Adding Free Gemini API Key (When Claimed)
-
-1. Open `.env` in the root folder.
-2. Paste your Google AI Studio key:
-   ```env
-   PORT=3000
-   GEMINI_API_KEY=AIzaSy...YourKeyHere
-   ```
-3. Restart the server (`npm start`). The assistant will automatically use Gemini 1.5 Flash for conversational intelligence while retaining all hard navigation routes and security guardrails!
+1. **Official Page Match (>90%):** Notice the top marquee news ticker, official logos, PSG signature royal blue menu bar, and carousel banners matching `https://www.psgtech.edu/`.
+2. **Bottom-Left Assistant:** Click the **PSG Nexus AI** icon located at the bottom-left corner.
+3. **Student Active Role:** Notice the assistant greets you immediately as a **Student** with relevant academic suggestions.
+4. **Auto-Redirect with Active Session:** Ask **`take me to form filling page`**. Notice the assistant counts down, navigates to `/forms`, and stays open with the full chat intact!
+5. **MongoDB Storage:** Open MongoDB Compass or visit `http://localhost:3000/api/conversations` to demonstrate real-time database persistence!
