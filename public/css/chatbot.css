@@ -9,58 +9,62 @@
   left: 24px;
   right: auto;
   z-index: 9999;
-  width: 64px;
-  height: 64px;
+  width: 68px;
+  height: 68px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #1b294b, #2b4bab);
-  color: #f4de88;
-  border: 3px solid #f4de88;
-  box-shadow: 0 8px 24px rgba(27, 41, 75, 0.45), 0 0 0 0 rgba(244, 222, 136, 0.5);
+  background: #08101f;
+  border: 2.5px solid #38bdf8;
+  box-shadow: 0 8px 24px rgba(8, 16, 31, 0.6), 0 0 16px rgba(56, 189, 248, 0.45);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   animation: pulse-ring-left 2.5s infinite;
+  overflow: hidden;
+  padding: 0;
 }
 
 #psg-chatbot-launcher:hover {
   transform: scale(1.08);
-  box-shadow: 0 12px 30px rgba(27, 41, 75, 0.65);
+  box-shadow: 0 12px 30px rgba(8, 16, 31, 0.75), 0 0 24px rgba(56, 189, 248, 0.65);
+  border-color: #67e8f9;
 }
 
-#psg-chatbot-launcher svg {
-  width: 32px;
-  height: 32px;
-  fill: #f4de88;
+.psg-launcher-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
 }
 
 @keyframes pulse-ring-left {
   0% {
-    box-shadow: 0 8px 24px rgba(27, 41, 75, 0.4), 0 0 0 0 rgba(244, 222, 136, 0.4);
+    box-shadow: 0 8px 24px rgba(8, 16, 31, 0.6), 0 0 0 0 rgba(56, 189, 248, 0.5);
   }
   70% {
-    box-shadow: 0 8px 24px rgba(27, 41, 75, 0.4), 0 0 0 14px rgba(244, 222, 136, 0);
+    box-shadow: 0 8px 24px rgba(8, 16, 31, 0.6), 0 0 0 15px rgba(56, 189, 248, 0);
   }
   100% {
-    box-shadow: 0 8px 24px rgba(27, 41, 75, 0.4), 0 0 0 0 rgba(244, 222, 136, 0);
+    box-shadow: 0 8px 24px rgba(8, 16, 31, 0.6), 0 0 0 0 rgba(56, 189, 248, 0);
   }
 }
 
 /* LAUNCHER TOOLTIP CALLOUT (FLOATS TO THE RIGHT OF LAUNCHER) */
 .psg-launcher-tooltip {
   position: absolute;
-  left: 76px;
+  left: 78px;
   right: auto;
-  background-color: #1b294b;
+  background-color: #08101f;
   color: #ffffff;
   padding: 6px 14px;
   border-radius: 20px;
   font-size: 0.8rem;
   font-weight: 600;
   white-space: nowrap;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-  border: 1px solid #f4de88;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+  border: 1.5px solid #38bdf8;
   pointer-events: none;
   animation: float-tooltip 3s ease-in-out infinite;
 }
@@ -117,17 +121,24 @@
 }
 
 .psg-chat-avatar {
-  width: 36px;
-  height: 36px;
-  background-color: #ffffff;
+  width: 40px;
+  height: 40px;
+  background-color: #08101f;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 800;
-  color: #2b4bab;
-  font-size: 1.1rem;
-  border: 2px solid #f4de88;
+  border: 2px solid #38bdf8;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+}
+
+.psg-avatar-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
 }
 
 .psg-chat-header-text h3 {
