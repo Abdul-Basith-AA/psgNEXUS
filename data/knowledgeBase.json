@@ -9,43 +9,43 @@
   },
   "navigationRoutes": [
     {
-      "keywords": ["form", "fill form", "apply", "bonafide", "leave application", "hall ticket form", "certificate", "request letter", "grievance"],
+      "keywords": ["form", "fill form", "apply form", "bonafide", "leave application", "hall ticket form", "certificate form", "request letter", "grievance", "take me to form", "go to form", "open form"],
       "url": "/forms",
-      "name": "Form Filling Portal",
+      "name": "Online Form Filling Portal",
       "reply": "Opening the PSG Tech Form Filling Portal for you. You can submit applications for Bonafide certificates, hostel leave, and hall ticket requisitions here."
     },
     {
-      "keywords": ["admission", "cutoff", "apply b.e", "mca admission", "m.tech", "eligibility", "fees", "tnea", "fee structure", "tuition fee"],
+      "keywords": ["admission", "cutoff", "apply b.e", "mca admission", "m.tech", "eligibility", "tnea", "fee structure", "tuition fee", "take me to admission", "go to admission", "admission page"],
       "url": "/admissions",
       "name": "Admissions & Fees Portal",
       "reply": "Redirecting you to the Admissions & Fee Structure page where you can explore eligibility criteria, TNEA cutoffs, and fee breakdowns."
     },
     {
-      "keywords": ["syllabus", "curriculum", "academics", "semester", "regulations", "course", "subjects", "credit", "exam timetable"],
+      "keywords": ["syllabus", "curriculum", "academics page", "semester", "regulations", "course", "subjects", "credit", "exam timetable", "take me to syllabus", "show syllabus", "go to academics"],
       "url": "/academics",
-      "name": "Academics & Syllabus",
+      "name": "Academics & Syllabus Repository",
       "reply": "Directing you to the Academics & Curriculum repository. You will find department syllabi (UG/PG), academic calendars, and course regulations."
     },
     {
-      "keywords": ["hostel", "library", "canteen", "sports", "gym", "campus facility", "mess", "wifi", "hostel timing"],
+      "keywords": ["hostel facility", "sports facility", "facilities page", "take me to facility", "hostel facilities", "campus facility"],
       "url": "/facilities",
       "name": "Campus Facilities & Hostels",
       "reply": "Taking you to the Campus Facilities overview. Detailed information on G.R.D. Memorial Library, boys/girls hostels, sports complexes, and dining."
     },
     {
-      "keywords": ["about", "history", "nirf", "accreditation", "principal", "trust", "management", "vision"],
+      "keywords": ["about page", "history of psg", "principal profile", "nirf ranking", "about us", "who started psg"],
       "url": "/about",
       "name": "About PSG Tech",
       "reply": "Navigating to the About PSG Tech page highlighting our 70+ years legacy, accreditations, and institutional leadership."
     },
     {
-      "keywords": ["contact", "phone", "email", "address", "helpdesk", "office", "coe", "emergency", "location"],
+      "keywords": ["contact page", "reach us", "emergency contact", "office phone", "contact number", "address of college"],
       "url": "/contact",
       "name": "Contact & Helpdesk",
       "reply": "Opening the Campus Contact & Emergency Directory with administrative extension numbers and office emails."
     },
     {
-      "keywords": ["home", "main page", "portal", "dashboard"],
+      "keywords": ["home page", "go home", "main portal", "homepage"],
       "url": "/",
       "name": "PSG Tech Home",
       "reply": "Taking you to the PSG College of Technology main homepage."
@@ -53,7 +53,7 @@
   ],
   "restrictedKeywords": [
     {
-      "keywords": ["salary", "payroll", "payslip", "remuneration", "faculty salary"],
+      "keywords": ["salary", "payroll", "payslip", "remuneration", "faculty salary", "staff pay"],
       "docId": "staff_salary_statements",
       "restrictedFor": ["student", "parent", "visitor"],
       "message": "⚠️ Access Restricted: Staff payroll, allowance, and remuneration details are confidential and accessible solely to authenticated Faculty & Administration."
@@ -72,10 +72,89 @@
     }
   ],
   "outOfScopeTopics": [
-    "movie", "cinema", "cricket score", "weather in delhi", "weather in mumbai",
-    "cook", "recipe", "video game", "bollywood", "hollywood", "politics", "election",
-    "bitcoin", "crypto", "dating", "stock market advice", "joke", "song lyrics",
-    "write a python script for a calculator", "write an essay about lions"
+    "movie", "cinema", "bollywood", "hollywood", "song", "joke", "dating",
+    "cricket score", "ipl score", "football score", "recipe", "how to cook",
+    "bitcoin", "crypto", "stock market", "election", "politics",
+    "weather in delhi", "weather in mumbai", "weather in usa",
+    "write a python calculator", "write code for snake game"
+  ],
+  "generalCampusKnowledge": [
+    {
+      "keywords": ["placement", "placements", "highest package", "average package", "recruiters", "companies", "placement percentage", "jobs", "salary package", "campus drive", "placement cell"],
+      "answer": "🎓 **PSG Tech Placements Overview:**\n• Placement Rate: Over 90% of eligible students are placed annually across leading multinational firms.\n• Top Recruiters: Microsoft, Google, Amazon, Caterpillar, Bosch, Qualcomm, Texas Instruments, Goldman Sachs, Cisco, Zoho, TCS, and L&T.\n• Highest Package: ₹44+ LPA (International & Product Tier).\n• Average Package: ₹8.5 - ₹12.5 LPA across Computing, Electrical, and Mechanical disciplines.\n• Placement & Training Cell: Located on the Ground Floor, D-Block. For queries: placement@psgtech.ac.in."
+    },
+    {
+      "keywords": ["principal", "who is the principal", "head of college", "principal name"],
+      "answer": "🏛️ **Institutional Leadership:**\n• Principal: Dr. K. Prakasan is the Principal of PSG College of Technology.\n• Managing Trustee: Shri L. Gopalakrishnan, Managing Trustee of PSG & Sons' Charities Trust.\n• Office of the Principal: Administrative Block, First Floor. Contact: principal@psgtech.edu / 0422-2572477."
+    },
+    {
+      "keywords": ["attendance", "minimum attendance", "attendance percentage", "shortage of attendance", "condonation"],
+      "answer": "📋 **Autonomous Attendance Regulations:**\n• Minimum Attendance: A student must secure a minimum of **75% attendance** in each course to be permitted to sit for the Autonomous End-Semester Examinations.\n• Condonation: Attendance between 65% and 74% can be condoned on valid medical grounds with appropriate medical certificates approved by the HoD and Principal.\n• Below 65%: Students securing less than 65% are not eligible to write the end-semester exams for that course and must repeat the course in subsequent semesters."
+    },
+    {
+      "keywords": ["internal marks", "ca marks", "continuous assessment", "cat test", "cat marks", "internal evaluation"],
+      "answer": "📊 **Continuous Assessment (CA) System:**\n• Weightage: 50 Marks for Continuous Assessment (CA) and 50 Marks for Autonomous End-Semester Examination.\n• Continuous Assessment Tests (CAT): Conducted 3 times per semester (CAT-1, CAT-2, CAT-3).\n• Components: Best 2 of 3 CATs + Assignments / Case Studies / Tutorial Assessments + Seminar Presentations."
+    },
+    {
+      "keywords": ["cgpa", "gpa", "grade", "grading system", "calculate cgpa", "arrear", "revaluation", "grade point"],
+      "answer": "📈 **Autonomous Grading & Credit System:**\n• Grades: O (10 - Outstanding), A+ (9 - Excellent), A (8 - Very Good), B+ (7 - Good), B (6 - Average), C (5 - Satisfactory), RA (Re-Appearance / Arrear).\n• GPA Formula: Σ(Course Credits × Grade Points) / Σ(Course Credits).\n• Revaluation: Students can apply for photocopy of answer scripts and revaluation within 7 days of result publication via the COE portal."
+    },
+    {
+      "keywords": ["library", "grd library", "library timings", "borrow books", "book limit", "digital library", "ieee"],
+      "answer": "📖 **Dr. G.R.D. Memorial Central Library:**\n• Collection: Over 2,50,000+ volumes, 350+ printed national and international journals.\n• E-Resources: Access to IEEE Xplore, ScienceDirect, ACM Digital Library, SpringerLink, and ASME.\n• Working Hours: Monday to Saturday: 8:00 AM – 10:00 PM (Sundays: 9:00 AM – 5:00 PM).\n• Borrowing Limits: UG Students can borrow up to 6 books; PG Students up to 8 books for 14 days (renewable online)."
+    },
+    {
+      "keywords": ["hostel", "hostel timing", "in time", "hostel in-time", "hostel fee", "hostel rooms", "warden", "boys hostel", "girls hostel", "mess", "outing"],
+      "answer": "🏠 **Hostel & Residential Life:**\n• In-Time: Strictly **8:30 PM** (biometric punching mandatory at hostel turnstiles).\n• Digital Outing Pass: Weekend home travel or late entries require pre-approved digital passes via the Form Filling Portal.\n• Amenities: High-speed Wi-Fi, solar water heating, modernized steam kitchens, study halls, and laundry services.\n• Chief Warden Office: 0422-4344777 / 4344444 (Peelamedu Hostel Office)."
+    },
+    {
+      "keywords": ["canteen", "cafeteria", "mess food", "food court", "coffee", "eating", "food"],
+      "answer": "☕ **Dining & Cafeteria Facilities:**\n• Central Canteen: Located near F-Block serving hygienic South Indian, North Indian, vegetarian, and non-vegetarian meals and snacks.\n• Timings: 7:30 AM to 7:00 PM on all working days.\n• Additional Spots: Campus Cafe, Fruit Juice Corner, and Coffee kiosks near the Library and Mechanical block."
+    },
+    {
+      "keywords": ["club", "clubs", "kriya", "fest", "symposium", "extracurricular", "rotaract", "ncc", "nss", "ieee club", "music club", "dramatics"],
+      "answer": "🎉 **Campus Life & Student Clubs:**\n• KRIYA: The landmark annual global techno-management festival organized by the Students Union of PSG Tech.\n• Technical Clubs: IEEE Student Branch, ACM Chapter, Computer Society of India (CSI), SAE Collegiate Club, Robotics Club, Coding Club.\n• Cultural & Social Clubs: Rotaract Club of PSG Tech, NSS, NCC (Air & Army Wings), Dramatics Club, Fine Arts Club, Music Club, Book Readers Club."
+    },
+    {
+      "keywords": ["scholarship", "scholarships", "fee concession", "financial aid", "merit scholarship"],
+      "answer": "💰 **Scholarships & Financial Assistance:**\n• Government Schemes: Post-Matric Scholarship for SC/ST/SCC, BC/MBC/DNC welfare scholarships, First Graduate Tuition Fee Concession.\n• National Scholarships: Central Sector Scheme (NSP portal), Pragati Scholarship for Girls (AICTE).\n• Institutional Aid: PSG & Sons' Charities Merit-cum-Means Scholarships and PSG Tech Alumni Association (Laudea) Trust awards.\n• Helpdesk: Academic Section, Main Admin Block."
+    },
+    {
+      "keywords": ["dress code", "uniform", "rules", "campus discipline", "mobile phone", "id card"],
+      "answer": "👔 **Campus Discipline & Dress Code:**\n• ID Card: Students must wear their official RFID Identity Card visibly with lanyard at all times inside campus.\n• Dress Code: Formal/smart-casual attire. For laboratory sessions, students must wear approved protective workshop coats and closed-toe leather/canvas shoes.\n• Mobile Phones: Mobile phone usage during lecture and lab hours is strictly restricted unless instructed for academic tasks."
+    },
+    {
+      "keywords": ["department", "departments", "branches", "courses offered", "ug courses", "pg courses", "mca", "cse", "it", "mech", "eee", "ece"],
+      "answer": "🎓 **Departments & Academic Programmes:**\n• Computing: Computer Science & Engg (CSE), Information Technology (IT), Computer Applications (MCA), AI & Data Science.\n• Electrical: Electrical & Electronics (EEE), Electronics & Communication (ECE), Instrumentation & Control (ICE), Biomedical Engg.\n• Mechanical & Sciences: Mechanical Engg, Production, Metallurgy, Robotics & Automation, Civil Engg, Biotechnology, Applied Science, MBA.\n• Syllabi for all courses are available in the Academics Portal.",
+      "redirect": "/academics"
+    },
+    {
+      "keywords": ["bus", "transport", "reach college", "route", "nearest railway station", "airport"],
+      "answer": "🚌 **Transportation & Location Connectivity:**\n• Campus Location: Avinashi Road, Peelamedu, Coimbatore - 641004.\n• From Airport (CJB): Just 4 km away (~10 mins by taxi or city bus).\n• From Railway Station (CBE): Approx. 7 km. City bus routes: 20A, 70, 11 operate frequently directly to the PSG Tech bus stop.\n• College Buses: College operates dedicated transportation routes across Coimbatore, Tirupur, and Pollachi for day scholars."
+    },
+    {
+      "keywords": ["atm", "bank", "medical", "hospital", "doctor", "health", "gym", "sports ground"],
+      "answer": "🏥 **Campus Amenities & Healthcare:**\n• Banking & ATM: Full-fledged Indian Bank branch with 24/7 ATM on campus; additional SBI ATM near the hostel gate.\n• Health Centre: On-campus medical dispensary with resident doctors, nursing staff, and 24/7 emergency ambulance service.\n• Sports & Fitness: Synthetic basketball court, floodlit volleyball court, football ground, indoor badminton stadium, and modernized gymnasium (Open: 6:00 AM - 8:00 AM & 4:30 PM - 7:00 PM)."
+    },
+    {
+      "keywords": ["bonafide", "bonafide certificate", "apply bonafide", "letter", "bus pass", "passport verification", "loan letter"],
+      "answer": "📄 **Bonafide Certificate Procedure:**\n• You can apply online instantly through our **Form Filling Portal**.\n• Select the purpose: Bank Education Loan, Passport Application, Bus/Train Concession, or State Scholarship.\n• Once submitted, the application is e-verified by your HoD and issued within 2 working days.",
+      "redirect": "/forms"
+    },
+    {
+      "keywords": ["hall ticket", "exam ticket", "admit card", "coe", "semester exam", "timetable"],
+      "answer": "🎫 **Autonomous Examination & Hall Ticket:**\n• End-Semester Hall Tickets are published through the COE portal 1 week prior to exams.\n• Duplicate hall ticket requisition or correction can be filed through the Online Forms Portal.",
+      "redirect": "/forms"
+    },
+    {
+      "keywords": ["fee", "pay fee", "tuition fee", "how to pay fee", "fee payment", "due date"],
+      "answer": "💳 **Fee Payment Guidelines:**\n• Semester tuition and hostel fees can be paid via the official PSG Tech Online Fee Portal (Net Banking / Debit Card / UPI).\n• Offline Payment: Can be made using Challan at Indian Bank, Peelamedu Branch (Campus premises).\n• Details & fee breakdowns are available on the Admissions & Fees page.",
+      "redirect": "/admissions"
+    },
+    {
+      "keywords": ["wifi", "internet", "campus wifi", "wifi password", "login", "studzone"],
+      "answer": "📶 **Campus Wi-Fi & IT Infrastructure:**\n• Network: High-speed campus-wide 10 Gbps optical fiber backbone network.\n• Access: Students can register their laptops and devices at the Computer Centre (CC) to receive individual Wi-Fi authentication credentials.\n• Studzone: Access attendance, marks, and course registration using your student roll number credentials."
+    }
   ],
   "faqByRole": {
     "student": [
@@ -84,7 +163,7 @@
         "answer": "As per Autonomous regulations, minimum required attendance is 75% per course to appear for Autonomous End-Semester Examinations. Students between 65%-74% must apply for condonation under medical grounds."
       },
       {
-        "keywords": ["internal marks", "ca marks", "continuous assessment"],
+        "keywords": ["internal marks", "ca marks", "continuous assessment", "cat marks"],
         "answer": "Continuous Assessment (CA) carries 50 marks for theory courses based on 3 Continuous Assessment Tests (CATs), assignments, and tutorial seminars."
       },
       {

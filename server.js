@@ -128,7 +128,7 @@ app.post('/api/chat', async (req, res) => {
     if (isOutOfScope) {
       responsePayload = {
         status: 'out_of_scope',
-        reply: 'I am PSG Nexus, an AI assistant dedicated exclusively to PSG College of Technology queries (academics, admissions, facilities, and campus administration). Please ask questions related to PSG Tech.',
+        reply: 'I am PSG Nexus, an AI assistant dedicated exclusively to PSG College of Technology queries (academics, admissions, facilities, placements, and campus administration). Please ask questions related to PSG Tech.',
         redirectUrl: null
       };
     }
@@ -166,7 +166,7 @@ app.post('/api/chat', async (req, res) => {
     }
 
     // ------------------------------------------------------------------
-    // ACTION 4: Role-Specific Answers from Campus Knowledge Base
+    // ACTION 4: Match Comprehensive Knowledge Base (Offline Engine)
     // ------------------------------------------------------------------
     if (!responsePayload) {
       const localMatch = findLocalFAQ(cleanMsg, activeRole);
@@ -236,14 +236,7 @@ app.post('/api/chat', async (req, res) => {
 
 // Helper: Check Out-of-Scope Queries
 function checkOutOfScope(msg) {
-  const offTopicKeywords = [
-    'movie', 'cinema', 'bollywood', 'hollywood', 'song', 'joke', 'dating',
-    'cricket score', 'ipl score', 'football score', 'recipe', 'how to cook',
-    'bitcoin', 'crypto', 'stock market', 'election', 'politics',
-    'weather in delhi', 'weather in mumbai', 'weather in usa',
-    'write a python calculator', 'write code for snake game'
-  ];
-
+  const offTopicKeywords = knowledgeBase.outOfScopeTopics || [];
   return offTopicKeywords.some(keyword => msg.includes(keyword));
 }
 
@@ -265,50 +258,7 @@ function checkDocumentRestriction(msg, role) {
 
 // Helper: Check Navigation & Redirection
 function checkNavigationRedirect(msg, currentPage) {
-  const navigationTriggers = [
-    {
-      keywords: ['form filling', 'fill form', 'bonafide form', 'leave form', 'apply bonafide', 'certificate form', 'take me to form', 'go to form', 'open form'],
-      url: '/forms',
-      name: 'Online Form Filling Portal',
-      reply: 'Sure! Redirecting you directly to the PSG Tech Form Filling Portal for Bonafide certificates, leave slips, and requisitions.'
-    },
-    {
-      keywords: ['admission', 'fees page', 'fee structure', 'cutoff', 'apply for admission', 'take me to admission', 'go to admission'],
-      url: '/admissions',
-      name: 'Admissions & Fees Portal',
-      reply: 'Taking you to the Admissions & Fee Structure page for comprehensive eligibility and tuition fee details.'
-    },
-    {
-      keywords: ['syllabus', 'curriculum', 'academics page', 'take me to syllabus', 'show syllabus', 'go to academics'],
-      url: '/academics',
-      name: 'Academics & Syllabus Repository',
-      reply: 'Redirecting you to the Academics & Syllabus repository to download course regulations and semester curricula.'
-    },
-    {
-      keywords: ['hostel', 'library', 'sports facility', 'facilities page', 'take me to facility', 'hostel facilities'],
-      url: '/facilities',
-      name: 'Campus Facilities',
-      reply: 'Redirecting you to the Campus Facilities overview covering hostels, G.R.D. Memorial Library, and sports infrastructure.'
-    },
-    {
-      keywords: ['about page', 'about psg', 'history of psg', 'principal profile', 'nirf ranking'],
-      url: '/about',
-      name: 'About PSG Tech',
-      reply: 'Navigating to the About PSG Tech section highlighting heritage, accreditations, and institutional excellence.'
-    },
-    {
-      keywords: ['contact page', 'reach us', 'emergency contact', 'office phone', 'contact number'],
-      url: '/contact',
-      name: 'Contact & Helpdesk',
-      reply: 'Opening the Contact Directory with office intercom extensions and campus email helplines.'
-    },
-    {
-      keywords: ['home page', 'go home', 'main portal'],
-      url: '/',
-      name: 'Home Portal',
-      reply: 'Returning to the PSG College of Technology homepage.'
-    }
-  ];
+  const navigationTriggers = knowledgeBase.navigationRoutes || [];
 
   for (const nav of navigationTriggers) {
     if (nav.keywords.some(k => msg.includes(k))) {
@@ -321,61 +271,51 @@ function checkNavigationRedirect(msg, currentPage) {
   return null;
 }
 
-// Helper: Find Role-Specific FAQs
+// Helper: Find Match across Role FAQs and Comprehensive Campus Knowledge Base
 function findLocalFAQ(msg, role) {
+  // 1. Check Role-specific FAQs first
   const roleFaqs = knowledgeBase.faqByRole[role] || [];
   for (const faq of roleFaqs) {
     if (faq.keywords.some(k => msg.includes(k))) {
       return faq;
     }
   }
+
+  // 2. Check General Campus Knowledge Base with keyword scoring
+  const generalFaqs = knowledgeBase.generalCampusKnowledge || [];
+  let bestMatch = null;
+  let maxScore = 0;
+
+  for (const faq of generalFaqs) {
+    let score = 0;
+    for (const keyword of faq.keywords) {
+      if (msg.includes(keyword)) {
+        score += keyword.length;
+      }
+    }
+    if (score > maxScore) {
+      maxScore = score;
+      bestMatch = faq;
+    }
+  }
+
+  if (maxScore > 0) {
+    return bestMatch;
+  }
+
   return null;
 }
 
 // Helper: Fallback when not an exact match
 function generateCampusFallback(msg, role) {
-  let roleGreeting = '';
-  let suggestions = [];
-
-  switch (role) {
-    case 'student':
-      roleGreeting = 'Hello, PSG Tech Student! Here is what I can assist you with right now:';
-      suggestions = [
-        'Take me to form filling page',
-        'Download B.E./B.Tech Syllabus',
-        'What are the hostel in-times?',
-        'Minimum attendance required for End-Sem exams'
-      ];
-      break;
-    case 'faculty':
-      roleGreeting = 'Welcome, Faculty member. Here are common services I can assist with:';
-      suggestions = [
-        'Open staff leave application form',
-        'Access Department Meeting Minutes',
-        'Syllabus Revision Guidelines'
-      ];
-      break;
-    case 'parent':
-      roleGreeting = 'Welcome to PSG Tech Parent Assistance. Quick topics available:';
-      suggestions = [
-        'How can I pay tuition and hostel fees?',
-        'Hostel Chief Warden contact details',
-        'Go to Admissions & Eligibility page'
-      ];
-      break;
-    default:
-      roleGreeting = 'Welcome to PSG College of Technology! Common visitor queries:';
-      suggestions = [
-        'Take me to admissions page',
-        'What is the TNEA cutoff for PSG Tech?',
-        'Explore Campus Facilities & Hostels'
-      ];
-      break;
-  }
-
   return {
-    reply: `${roleGreeting}\n• You can ask about course syllabi, CAT marks, attendance criteria, and hostel rules.\n• You can also ask me to automatically redirect you anywhere (e.g., "take me to form filling page").`,
-    suggestions: suggestions
+    reply: `I understand you are asking about PSG College of Technology. Here are key campus topics I can answer in detail:\n\n• **Placements:** Top recruiters (Microsoft, Amazon, Zoho), average packages, placement percentage.\n• **Academics:** Attendance criteria (75%), CAT continuous assessment marks, CGPA calculations, and syllabus downloads.\n• **Campus Facilities:** GRD Memorial Library timings, hostel in-times (8:30 PM), canteen, sports complex, and Wi-Fi access.\n• **Student Services:** Applying for Bonafide certificates, duplicate hall tickets, and hostel outing passes.\n\nYou can also say **"take me to form filling page"** or **"show syllabus"** for automatic navigation!`,
+    suggestions: [
+      'Tell me about campus placements',
+      'What are the library timings?',
+      'Who is the principal of PSG Tech?',
+      'What clubs and fests like Kriya are held?'
+    ]
   };
 }
 
@@ -387,10 +327,10 @@ async function generateGeminiReply(message, role, userDetails, currentPage) {
     User Details: ${JSON.stringify(userDetails || {})}
     Current Webpage: ${currentPage}
     Rules:
-    1. Answer professionally, concisely, and accurately about PSG Tech.
-    2. Do NOT answer any non-college queries (politics, entertainment, external coding). Politely decline.
+    1. Answer professionally, concisely, and accurately about PSG College of Technology.
+    2. Do NOT answer non-college queries (politics, movies, external coding). Politely decline.
     3. If the user asks for confidential faculty files (payroll, question moderation banks) and is a student or visitor, strictly deny access.
-    4. Keep responses within 2 to 4 sentences unless detailed instructions are requested.
+    4. Format your answer with clear bullet points.
   `;
 
   const response = await geminiAI.models.generateContent({
@@ -399,7 +339,7 @@ async function generateGeminiReply(message, role, userDetails, currentPage) {
     config: {
       systemInstruction: systemInstruction,
       temperature: 0.7,
-      maxOutputTokens: 250
+      maxOutputTokens: 350
     }
   });
 
