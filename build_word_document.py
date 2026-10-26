@@ -3,7 +3,7 @@ import docx
 from docx import Document
 from docx.shared import Inches, Pt, RGBColor
 from docx.enum.text import WD_ALIGN_PARAGRAPH
-from docx.enum.table import WD_TABLE_ALIGNMENT, WD_ALIGN_VERTICAL
+from docx.enum.table import WD_TABLE_ALIGNMENT
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 
@@ -32,12 +32,12 @@ def set_table_borders(table, color="000000", sz="4", val="single"):
 def create_design_document():
     doc = Document()
 
-    # Set Margins
+    # Set Margins (0.8 inch all around)
     for section in doc.sections:
         section.top_margin = Inches(0.8)
         section.bottom_margin = Inches(0.8)
-        section.left_margin = Inches(0.9)
-        section.right_margin = Inches(0.9)
+        section.left_margin = Inches(0.85)
+        section.right_margin = Inches(0.85)
 
     # Styles Setup
     normal_style = doc.styles['Normal']
@@ -81,10 +81,9 @@ def create_design_document():
     run_t.underline = True
     run_t.font.size = Pt(13)
 
-    # Helper function for Section Headings
     def add_section_heading(text):
         p = doc.add_paragraph()
-        p.paragraph_format.space_before = Pt(10)
+        p.paragraph_format.space_before = Pt(11)
         p.paragraph_format.space_after = Pt(4)
         run = p.add_run(text)
         run.bold = True
@@ -100,7 +99,7 @@ def create_design_document():
     table_team.alignment = WD_TABLE_ALIGNMENT.CENTER
     set_table_borders(table_team)
 
-    col_widths = [Inches(1.5), Inches(1.2), Inches(2.0), Inches(2.0)]
+    col_widths = [Inches(1.5), Inches(1.2), Inches(2.2), Inches(1.9)]
     headers = ["Team No. & Name", "Roll No.", "Name of the student", "Name of the Faculty Guide"]
 
     hdr_cells = table_team.rows[0].cells
@@ -114,9 +113,9 @@ def create_design_document():
             r.font.size = Pt(10.5)
 
     team_data = [
-        ("Team 12\nPSG Nexus", "26MX101", "Abdul Basith A", "Ms. A. Kalyani\nAssistant Professor, CA"),
-        ("Team 12\nPSG Nexus", "26MX102", "Karthikeyan S", "Ms. A. Kalyani\nAssistant Professor, CA"),
-        ("Team 12\nPSG Nexus", "26MX103", "Laxman R", "Ms. A. Kalyani\nAssistant Professor, CA")
+        ("Team 1\nPSG Nexus", "26MX209", "Laxman B", "Ms. J. Gowri Thangam\nAssistant Professor, CA"),
+        ("Team 1\nPSG Nexus", "26MX110", "Karthikeyan S", "Ms. J. Gowri Thangam\nAssistant Professor, CA"),
+        ("Team 1\nPSG Nexus", "26MX115", "Mohamed Abdul Basith A A", "Ms. J. Gowri Thangam\nAssistant Professor, CA")
     ]
 
     for row_idx, data in enumerate(team_data, start=1):
@@ -144,7 +143,7 @@ def create_design_document():
     set_cell_margins(cell, top=140, bottom=140, left=160, right=160)
     p = cell.paragraphs[0]
     p.alignment = WD_ALIGN_PARAGRAPH.LEFT
-    r = p.add_run("PSG NEXUS – Intelligent Role-Based Campus Digital Assistant and Navigation Portal for PSG College of Technology")
+    r = p.add_run("PSG Nexus (Chat-Bot)")
     r.bold = True
     r.font.size = Pt(11)
 
@@ -160,20 +159,19 @@ def create_design_document():
     set_cell_margins(cell, top=140, bottom=140, left=160, right=160)
     
     overview_text = (
-        "PSG College of Technology is a large autonomous institution with many departments, academic regulations, "
-        "and student services. Currently, when students, parents, or visitors visit the college website, finding specific "
-        "details like attendance rules, internal Continuous Assessment (CA) calculation, syllabus copies, hostel gate rules, "
-        "or certificate application forms requires clicking through multiple nested menus and reading through long PDF circulars.\n\n"
-        "PSG Nexus is developed to solve this issue by providing a single-point interactive digital assistant directly on the "
-        "campus portal. We built a responsive replica of the official PSG Tech website matching the institutional identity, "
-        "with an AI assistant floating at the bottom-left corner. The assistant is built using Node.js, Express, EJS templates, "
-        "Bootstrap 5, and JavaScript. It provides immediate, human-friendly answers to frequent college questions and can automatically "
-        "redirect users to dedicated pages—such as the Online Form Filling Portal or the Syllabus Repository—while keeping the chat window "
-        "open and preserving conversation history through browser session storage.\n\n"
-        "The application also implements role-based access control. While students can readily access academic guidelines, exam schedules, "
-        "and certificate request forms, sensitive faculty documents such as academic council meeting minutes and staff payroll records "
-        "are strictly restricted from student view. Furthermore, all student interactions are logged in real time to a local MongoDB "
-        "database, allowing college administrators to identify common student issues and continuously improve campus support."
+        "PSG Nexus is a helpful digital assistant created just for the PSG College website. Our main goal is to give quick and "
+        "personalized support to students, teachers, parents, alumni, and visitors based on what they need. It acts as a single, "
+        "easy-to-use guide where users can find reliable information about courses, academic departments, admissions, college events, "
+        "fee details, syllabus copies, campus facilities, and other important institutional resources.\n\n"
+        "This tool lets users easily move around the college website while the assistant stays active on the screen to help them at any time. "
+        "Unlike conventional chatbots that reset upon opening another webpage, PSG Nexus maintains session continuity using browser session "
+        "storage, meaning you get continuous support and clear directions without having to search for things manually or retype questions. "
+        "The system also introduces intelligent page redirection—for instance, when a user asks to fill a bonafide or hostel leave form, "
+        "the chatbot directs them straight to the Online Forms Portal while keeping the conversation open.\n\n"
+        "Additionally, role-based access ensures that while students and visitors receive clear public guidance on academics and hostel rules, "
+        "confidential staff circulars remain restricted. All queries and interactions are stored in a local MongoDB database to help the college "
+        "understand student requirements. By providing fast and trustworthy answers, PSG Nexus makes using the website a much better experience "
+        "and helps build a more connected and efficient digital campus for everyone."
     )
     p = cell.paragraphs[0]
     p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
@@ -198,21 +196,21 @@ def create_design_document():
     r1.font.size = Pt(10.5)
     r2 = p1.add_run(
         "• Description: The official portal of PSG Tech acts as the central information repository for the college. "
-        "It publishes college news, admission announcements, tenders, department details, and links to external portals like Studzone. "
-        "However, it is purely a static informational website with traditional dropdown navigation. There is no automated help assistant "
-        "or search chatbot. When first-year students or parents visit the portal, they often struggle to locate specific information such as "
-        "hostel rules, condonation criteria, or fee payment procedures without manually searching across multiple sub-pages.\n\n"
+        "It publishes college news, admission announcements, tenders, department details, and links to external portals. "
+        "However, it is a static informational website with traditional dropdown navigation and does not have any chatbot or automated assistant. "
+        "When first-year students or parents visit the portal, they have to navigate the site by themselves and find specific information "
+        "(like hostel rules or fee procedures) manually by clicking through multiple sub-pages, which can be time-consuming.\n\n"
     )
     r2.font.size = Pt(10.5)
 
-    r3 = p1.add_run("2. Anna University Student COE Web Portal (Link: https://coe1.annauniv.edu/)\n")
+    r3 = p1.add_run("2. PSG Tech Studzone / Student Services Portal (Link: https://studzone.psgtech.ac.in/)\n")
     r3.bold = True
     r3.font.size = Pt(10.5)
     r4 = p1.add_run(
-        "• Description: The Controller of Examinations portal of Anna University is used by affiliated and autonomous college students "
-        "to check exam schedules, internal marks, and semester results. While it serves transactional examination needs, it lacks any interactive "
-        "guidance mechanism. If a student has doubts regarding grade point formulas, revaluation timelines, or photocopy requests, there is no "
-        "conversational support available to guide them to the correct procedure."
+        "• Description: Studzone is the primary student portal used by PSG Tech students for viewing internal marks, attendance logs, and exam fee payments. "
+        "While it serves transactional academic requirements, it lacks any conversational guidance or virtual helpdesk. If a student has questions regarding "
+        "attendance condonation limits (65%-74%), CAT assessment weightage, or how to apply for bonafide certificates, they must either consult the academic "
+        "handbook or visit the department office in person. There is no instant digital assistant to guide them directly to the appropriate form or procedure."
     )
     r4.font.size = Pt(10.5)
 
@@ -228,17 +226,14 @@ def create_design_document():
     set_cell_margins(cell, top=140, bottom=140, left=160, right=160)
 
     obj_text = (
-        "1. To develop a responsive web portal representing PSG College of Technology with an integrated, floating AI digital assistant.\n"
-        "2. To provide quick, 100% accurate responses to routine college questions regarding minimum attendance (75%), CAT continuous "
-        "assessment calculations (50 marks), autonomous grading scales, hostel rules, and placement statistics.\n"
-        "3. To implement an automated page redirection feature that smoothly guides users to relevant pages (e.g., from Home to the Online "
-        "Form Filling Portal) while preserving conversation state and keeping the chat window open using browser sessionStorage.\n"
-        "4. To enforce role-based access control (RBAC) so that authenticated faculty members can view internal meeting records, while "
-        "students and visitors are restricted from viewing confidential files.\n"
-        "5. To include an out-of-scope guardrail filter that ensures the chatbot remains professional and answers only questions related "
-        "to the college and campus life.\n"
-        "6. To store all conversations, roles, queries, and server responses in a local MongoDB database so that campus administrators "
-        "can view student queries directly using MongoDB Compass."
+        "• To develop an intelligent, context-aware chatbot serving as a unified digital guide for the PSG College ecosystem.\n"
+        "• To deliver instant, 24/7 access to crucial institutional information regarding academics, admissions, fees, and campus amenities.\n"
+        "• To elevate the user experience (UX) by significantly reducing the time required to retrieve syllabus, circulars, and form details.\n"
+        "• To implement tailored, role-based assistance addressing the varying intents of students, faculty, parents, alumni, and visitors.\n"
+        "• To enable automated in-browser page redirection (e.g., navigating directly to the Online Forms Portal or Syllabus repository) "
+        "while keeping the chatbot session continuously active and conversations preserved across page transitions.\n"
+        "• To safeguard institutional confidentiality through role-based access control, ensuring students cannot access private staff files, "
+        "and logging all conversation data to local MongoDB storage for administrative review."
     )
     p = cell.paragraphs[0]
     p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
@@ -258,15 +253,16 @@ def create_design_document():
 
     scope_text = (
         "• Scope:\n"
-        "The project is designed for the students, faculty members, parents, alumni, and prospective visitors of PSG College of Technology. "
-        "It acts as a 24/7 digital campus guide and automated navigation hub across web browsers on desktops, laptops, and mobile devices.\n\n"
-        "• Practical Use:\n"
-        "1. For Students: Instantly clarify attendance rules, internal assessment weightage, library book limits, hostel in-times (8:30 PM), "
-        "and navigate straight to the online form filling portal to request Bonafide certificates or hall tickets.\n"
-        "2. For Parents: Quickly access tuition and hostel fee payment schedules, hostel warden phone numbers, and TNEA cutoff trends without confusion.\n"
-        "3. For Faculty: Obtain quick access to leave application forms, syllabus revision guidelines, and department meeting notices.\n"
-        "4. For Visitors & Applicants: Learn about autonomous degree programmes, NAAC A+ accreditation status, NIRF ranking, and campus directions.\n"
-        "5. For College Administration: Monitor student queries via MongoDB Compass to understand common difficulties and post timely announcements."
+        "The application is integrated as a persistent, floating interactive widget in the bottom-left corner of the PSG College website. "
+        "It covers key institutional domains including departmental directories, syllabus repositories, admission guidelines, campus events, "
+        "hostel rules, and online student form filling services.\n\n"
+        "• Use Cases:\n"
+        "1. Prospective Students & Parents: Navigating admission procedures, checking TNEA cutoff trends, understanding fee structures, and exploring hostel/campus facilities.\n"
+        "2. Current Students: Clarifying attendance criteria (75%), Continuous Assessment marks (CAT), CGPA calculation, hostel in-times (8:30 PM), "
+        "and submitting requests for Bonafide certificates or duplicate hall tickets.\n"
+        "3. Faculty & Staff: Obtaining quick access to leave application procedures, academic council schedules, and syllabus revision memos.\n"
+        "4. Visitors & Alumni: Accessing campus directions, alumni association updates (Laudea), and institutional NIRF / NAAC accreditation details.\n"
+        "5. Campus Administration: Viewing stored conversation logs in MongoDB Compass to recognize frequently asked student queries and address bottlenecks."
     )
     p = cell.paragraphs[0]
     p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
@@ -274,7 +270,7 @@ def create_design_document():
     r.font.size = Pt(10.5)
 
     # -------------------------------------------------------------
-    # VIII. Technology to be used
+    # VIII. Technology to be used (ACCURATE WAD SYLLABUS STACK)
     # -------------------------------------------------------------
     add_section_heading("VIII. 	Technology to be used")
 
@@ -286,20 +282,21 @@ def create_design_document():
 
     tech_text = (
         "• Frontend Technologies:\n"
-        "  - HTML5 & CSS3: Structuring web pages and applying custom PSG Tech brand styling (Navy Blue #2B4BAB and Gold #F4DE88).\n"
-        "  - Bootstrap 5.3 Framework: Building responsive navigation bars, carousels, cards, grids, and dialog modals.\n"
-        "  - Vanilla JavaScript (ES6): Handling DOM manipulation, client-side event listeners, typing animations, and redirection timers.\n\n"
-        "• Templating & Server Architecture:\n"
-        "  - EJS (Embedded JavaScript): Dynamic server-side rendering with reusable layout partials (header.ejs, footer.ejs, chatbot.ejs).\n"
-        "  - Node.js & Express.js: Robust backend runtime and web server managing routing, static files, and the /api/chat endpoint.\n\n"
-        "• Session & State Management:\n"
-        "  - Browser sessionStorage: Preserving active chat logs, current user role, and open/closed widget state across multi-page navigation.\n\n"
+        "  - HTML5 & CSS3: Page structuring and responsive layout conforming to the official PSG Tech website design.\n"
+        "  - Bootstrap 5.3: Responsive navigation bars, hero carousel, cards, and modal dialogs with PSG brand styling.\n"
+        "  - JavaScript (ES6): Interactive client-side behavior, floating widget toggling, auto-redirection timers, and input validation.\n\n"
+        "• Server-Side & Templating Engine:\n"
+        "  - Node.js: Cross-platform, asynchronous JavaScript runtime environment for executing the backend script.\n"
+        "  - Express.js: Web application framework for handling HTTP routing, static asset serving, and RESTful API endpoints (/api/chat).\n"
+        "  - EJS (Embedded JavaScript): Template engine for server-side dynamic rendering with shared partials (header.ejs, footer.ejs, chatbot.ejs).\n\n"
+        "• Client-Side Session & State Management:\n"
+        "  - Browser sessionStorage: Preserves conversation history, user role, and widget visibility across page navigation without database reload overhead.\n\n"
         "• Database & Storage:\n"
-        "  - MongoDB (Local Storage): Storing conversation documents, timestamps, and roles in 'psgnexus_db' via Mongoose ODM.\n"
-        "  - MongoDB Compass: Desktop GUI tool used for inspecting live student query records.\n\n"
-        "• AI & Natural Language Processing:\n"
-        "  - Built-in Campus Knowledge Engine: Local keyword scoring and intent classification for instant offline answers during reviews.\n"
-        "  - Google GenAI SDK (@google/genai): Free-tier integration with Gemini 1.5 Flash for answering open-ended campus questions."
+        "  - MongoDB (Local Storage): Document-oriented database for logging chat sessions, roles, timestamps, and status into 'psgnexus_db'.\n"
+        "  - MongoDB Compass: Official GUI client used to inspect and verify stored conversation collections.\n\n"
+        "• AI / NLP Engine:\n"
+        "  - Built-in Campus Knowledge Engine: Local keyword-scoring algorithm delivering fast, offline-ready answers to 50+ college topics.\n"
+        "  - Google GenAI SDK (@google/genai): Integration with Gemini 1.5 Flash for answering open-ended campus queries."
     )
     p = cell.paragraphs[0]
     p.alignment = WD_ALIGN_PARAGRAPH.LEFT
@@ -318,21 +315,20 @@ def create_design_document():
     set_cell_margins(cell, top=140, bottom=140, left=160, right=160)
 
     func_text = (
-        "1. Institutional Role Management: The application defaults to the 'Student' role for immediate use, while allowing users "
-        "to switch between Student, Faculty, Parent, and Visitor roles via an in-chat selector.\n"
-        "2. Campus Question Answering: The chatbot processes user text and provides structured answers regarding attendance rules (75%), "
-        "Continuous Assessment tests (CAT), autonomous GPA calculations, hostel timings (8:30 PM), library facilities, and placements.\n"
-        "3. Out-of-Scope Query Guardrail: The backend scans incoming messages for non-college topics (e.g., movies, gaming, politics, external programming) "
-        "and returns a polite refusal message reminding users to ask campus-related questions.\n"
-        "4. Role-Based Document Access Control: If a student asks for confidential faculty files (e.g., academic council meeting minutes or staff payroll), "
-        "the system rejects the request with an 'Access Restricted' warning, but approves it when queried under the Faculty role.\n"
-        "5. Automated Multi-Page Redirection: When the user requests a specific section (e.g., 'take me to form filling page' or 'show syllabus'), "
-        "the chatbot displays a confirmation with an animated progress bar and redirects the browser window to that page.\n"
-        "6. Cross-Page Session Persistence: The conversation history, active role, and widget visibility are saved in sessionStorage, "
-        "ensuring the chat stays open and continues seamlessly after redirecting to another page.\n"
-        "7. Database Logging: Every user message, role, response, and timestamp are saved asynchronously into MongoDB under the 'conversations' collection.\n"
-        "8. Online Form Filling Services: A functional forms portal where students can submit online requests for Bonafide certificates, hostel outing slips, "
-        "and duplicate hall tickets with confirmation popups."
+        "1. Role Identification & Intent Recognition: The system defaults to the 'Student' role for immediate usability and accurately "
+        "categorizes user queries, tailoring responses based on the user's role (Student, Faculty, Parent, Visitor).\n"
+        "2. Continuous Session Management: The chatbot maintains conversational context and persists across different pages of the website "
+        "using browser sessionStorage without resetting or losing previous chat messages.\n"
+        "3. Automated Page Redirection: The system detects navigation requests (e.g., 'take me to form filling page' or 'show syllabus') "
+        "and triggers automatic redirection with a countdown banner while keeping the chat open.\n"
+        "4. Out-of-Scope Boundary Guardrail: Queries unrelated to PSG Tech (such as entertainment, general sports, or external coding) "
+        "are filtered out and handled with a polite refusal prompting the user to ask college-related questions.\n"
+        "5. Role-Based Document Access Control: Confidential faculty records (e.g., academic council meeting minutes or staff payroll) "
+        "are restricted when queried under Student/Visitor roles and approved only for verified Faculty sessions.\n"
+        "6. Local Database Logging: Every conversation exchange (user query, bot response, user role, status, and timestamp) is stored "
+        "asynchronously in local MongoDB under the 'conversations' collection.\n"
+        "7. Online Form Submission Services: Provides interactive student service forms for Bonafide certificates, hostel outing passes, "
+        "and duplicate hall tickets with dynamic reference ID generation."
     )
     p = cell.paragraphs[0]
     p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
@@ -351,15 +347,12 @@ def create_design_document():
     set_cell_margins(cell, top=140, bottom=140, left=160, right=160)
 
     nonfunc_text = (
-        "1. Usability & User Experience: The portal faithfully replicates the official PSG Tech website design (>90% match) with clean typography, "
-        "accessible navigation, and an intuitive bottom-left floating chatbot with animated pulse indicators.\n"
-        "2. Performance & Speed: Local knowledge base matches respond within 50 milliseconds, providing an instant conversational experience "
-        "without noticeable latency.\n"
-        "3. Offline Reliability: The application runs completely offline during lab tests and viva evaluations using its local database and knowledge engine, "
-        "ensuring zero dependency on live internet connectivity.\n"
-        "4. Security & Privacy: Sensitive faculty information is protected through role-based access rules, and secret API keys are kept safely in server environment variables.\n"
-        "5. Cross-Browser Compatibility: Compatible across major modern web browsers including Google Chrome, Mozilla Firefox, Microsoft Edge, and Safari.\n"
-        "6. Maintainability: Structured using standard Model-View-Controller (MVC) principles with clean separation between EJS views, static assets, and Express route controllers."
+        "• Performance: Chatbot response time must be under 1.5 seconds (under 50ms for local knowledge base matching) to ensure a fluid conversational experience.\n"
+        "• Availability & Offline Reliability: The system architecture guarantees high availability and includes complete offline operational capability "
+        "during lab reviews and network downtimes.\n"
+        "• Usability: The UI widget is non-intrusive, placed at the bottom-left with intuitive launcher icons, clear typography, and responsive layout across desktop, tablet, and mobile devices.\n"
+        "• Visual Consistency: The web portal closely replicates (>90% match) the visual identity of the official PSG College of Technology website (Royal Blue #2B4BAB and Gold accents).\n"
+        "• Security & Privacy: Role-based authorization prevents unauthorized access to internal staff records. All sensitive server keys are maintained securely in environment variables."
     )
     p = cell.paragraphs[0]
     p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
@@ -375,9 +368,9 @@ def create_design_document():
     p_flow_desc.paragraph_format.space_before = Pt(2)
     p_flow_desc.paragraph_format.space_after = Pt(6)
     r_fd = p_flow_desc.add_run(
-        "The following diagram illustrates the complete operational workflow of the PSG Nexus application, "
-        "showing role selection, query evaluation, boundary filtering, document security checks, page redirection, "
-        "and dual persistence to MongoDB Compass and browser session storage:"
+        "Figure 1 illustrates the complete operational flow of the PSG Nexus application, detailing the role selection, "
+        "boundary guardrail check, authorization filter, navigation intent evaluation, dual-tier response generation, "
+        "and asynchronous storage into MongoDB and browser session storage:"
     )
     r_fd.font.size = Pt(10.5)
 
@@ -391,7 +384,7 @@ def create_design_document():
         p_cap1 = doc.add_paragraph()
         p_cap1.alignment = WD_ALIGN_PARAGRAPH.CENTER
         p_cap1.paragraph_format.space_after = Pt(12)
-        r_c1 = p_cap1.add_run("Figure 1: Complete System Flow Diagram of PSG Nexus")
+        r_c1 = p_cap1.add_run("Figure 1: Complete System Flow Diagram of PSG Nexus Application")
         r_c1.bold = True
         r_c1.font.size = Pt(10)
 
@@ -419,7 +412,7 @@ def create_design_document():
 
         p_cap2 = doc.add_paragraph()
         p_cap2.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        p_cap2.paragraph_format.space_after = Pt(10)
+        p_cap2.paragraph_format.space_after = Pt(8)
         r_c2 = p_cap2.add_run("Figure 2: Homepage Interface of PSG Nexus Portal with Bottom-Left Assistant Launcher")
         r_c2.bold = True
         r_c2.font.size = Pt(10)
@@ -443,7 +436,7 @@ def create_design_document():
 
         p_cap3 = doc.add_paragraph()
         p_cap3.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        p_cap3.paragraph_format.space_after = Pt(10)
+        p_cap3.paragraph_format.space_after = Pt(8)
         r_c3 = p_cap3.add_run("Figure 3: Interactive PSG Nexus Chatbot Interface (Student Role & Quick Prompts)")
         r_c3.bold = True
         r_c3.font.size = Pt(10)
@@ -492,7 +485,6 @@ def create_design_document():
 
     table_sig = doc.add_table(rows=1, cols=2)
     table_sig.alignment = WD_TABLE_ALIGNMENT.CENTER
-    # No visible borders for signature line
     tblBorders = OxmlElement('w:tblBorders')
     for b_name in ['top', 'left', 'bottom', 'right', 'insideH', 'insideV']:
         b = OxmlElement(f'w:{b_name}')
@@ -505,13 +497,13 @@ def create_design_document():
 
     p_sig_l = sig_left.paragraphs[0]
     p_sig_l.alignment = WD_ALIGN_PARAGRAPH.LEFT
-    r_sl = p_sig_l.add_run("Signature of the students\n\n\n1. __________________________\n\n2. __________________________\n\n3. __________________________")
+    r_sl = p_sig_l.add_run("Signature of the students\n\n\n1. __________________________ (26MX209)\n\n2. __________________________ (26MX110)\n\n3. __________________________ (26MX115)")
     r_sl.bold = True
     r_sl.font.size = Pt(11)
 
     p_sig_r = sig_right.paragraphs[0]
     p_sig_r.alignment = WD_ALIGN_PARAGRAPH.RIGHT
-    r_sr = p_sig_r.add_run("Signature of the Guide\n\n\n\n__________________________\n(Ms. A. Kalyani)")
+    r_sr = p_sig_r.add_run("Signature of the Guide\n\n\n\n__________________________\n(Ms. J. Gowri Thangam)")
     r_sr.bold = True
     r_sr.font.size = Pt(11)
 
