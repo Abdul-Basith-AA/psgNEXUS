@@ -1,7 +1,6 @@
 /**
- * PSG NEXUS - Client-Side Intelligent Chatbot & Cross-Page Persistence Engine
- * Position: Bottom-Left | Default Role: Student (with all roles switchable)
- * Local MongoDB Storage enabled via Express /api/chat
+ * PSG NEXUS - Official College AI Client-Side Engine
+ * Inspired by samp.html: Modern Glassmorphism, Bouncy Transitions & Cross-Page Persistence
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -9,8 +8,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const launcher = document.getElementById('psg-chatbot-launcher');
   const chatWindow = document.getElementById('psg-chatbot-window');
   const closeBtn = document.getElementById('psg-close-chat-btn');
-  const minimizeBtn = document.getElementById('psg-minimize-chat-btn');
-  const chatBody = document.getElementById('psg-chat-body');
+  const resetBtn = document.getElementById('psg-reset-chat-btn');
+  const chatMessages = document.getElementById('psg-chat-messages');
+  const typingIndicator = document.getElementById('psg-typing-indicator');
   const chatForm = document.getElementById('psg-chat-form');
   const chatInput = document.getElementById('psg-chat-input');
   const roleBadge = document.getElementById('psg-active-role-badge');
@@ -23,8 +23,18 @@ document.addEventListener('DOMContentLoaded', () => {
   let messages = JSON.parse(sessionStorage.getItem('psg_chat_messages') || '[]');
   let isOpen = sessionStorage.getItem('psg_chat_isOpen') === 'true';
 
+  // SVG Bot Avatar template for bot messages
+  const botAvatarSvg = `
+    <div class="psg-msg-avatar">
+      <svg viewBox="0 0 100 100">
+        <path d="M50 10 L85 25 V50 C85 75 50 90 50 90 C50 90 15 75 15 50 V25 Z" fill="none" stroke="#0a2c66" stroke-width="8"/>
+        <circle cx="50" cy="45" r="18" fill="#0066cc"/>
+      </svg>
+    </div>
+  `;
+
   // =========================================================================
-  // INITIALIZATION ON PAGE LOAD
+  // 1. INITIALIZATION ON PAGE LOAD
   // =========================================================================
   function initChatbot() {
     updateRoleBadge();
@@ -41,38 +51,57 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // =========================================================================
-  // OPEN / CLOSE TOGGLE
+  // 2. OPEN / CLOSE TOGGLE (Smooth Bouncy Animation)
   // =========================================================================
   function openChat() {
-    chatWindow.classList.remove('hidden');
+    chatWindow.classList.remove('chat-hidden');
+    chatWindow.classList.add('chat-visible');
     isOpen = true;
     sessionStorage.setItem('psg_chat_isOpen', 'true');
+
+    // Hide notification badge when opened
+    const badge = launcher ? launcher.querySelector('.psg-fab-badge') : null;
+    if (badge) badge.style.display = 'none';
+
     scrollToBottom();
-    setTimeout(() => chatInput.focus(), 200);
+    setTimeout(() => {
+      if (chatInput) chatInput.focus();
+    }, 350);
   }
 
   function closeChat() {
-    chatWindow.classList.add('hidden');
+    chatWindow.classList.remove('chat-visible');
+    chatWindow.classList.add('chat-hidden');
     isOpen = false;
     sessionStorage.setItem('psg_chat_isOpen', 'false');
   }
 
-  launcher.addEventListener('click', () => {
-    if (chatWindow.classList.contains('hidden')) {
-      openChat();
-    } else {
+  if (launcher) {
+    launcher.addEventListener('click', () => {
+      if (chatWindow.classList.contains('chat-visible')) {
+        closeChat();
+      } else {
+        openChat();
+      }
+    });
+  }
+
+  if (closeBtn) closeBtn.addEventListener('click', closeChat);
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isOpen) {
       closeChat();
     }
   });
 
-  if (closeBtn) closeBtn.addEventListener('click', closeChat);
-  if (minimizeBtn) minimizeBtn.addEventListener('click', closeChat);
-
   // =========================================================================
-  // ROLE MANAGEMENT (Student default, all roles switchable)
+  // 3. ROLE MANAGEMENT (Student default, all roles switchable)
   // =========================================================================
   function updateRoleBadge() {
-    roleBadge.textContent = activeRole.toUpperCase();
+    if (roleBadge) {
+      roleBadge.textContent = activeRole.toUpperCase();
+    }
     sessionStorage.setItem('psg_chat_role', activeRole);
   }
 
@@ -82,16 +111,15 @@ document.addEventListener('DOMContentLoaded', () => {
     roleModalContainer.innerHTML = `
       <div class="psg-role-selector-card">
         <h5>Institutional Role Selector</h5>
-        <div class="small text-muted">Currently active: <strong>${activeRole.toUpperCase()}</strong>. You can switch to test role permissions:</div>
+        <div class="text-muted">Active Role: <strong>${activeRole.toUpperCase()}</strong>. Select a role to test contextual permissions:</div>
         <div class="psg-role-grid">
           <button type="button" class="psg-role-item-btn ${activeRole === 'student' ? 'active' : ''}" data-role="student">👨‍🎓 Student</button>
           <button type="button" class="psg-role-item-btn ${activeRole === 'faculty' ? 'active' : ''}" data-role="faculty">👨‍🏫 Faculty / Staff</button>
           <button type="button" class="psg-role-item-btn ${activeRole === 'parent' ? 'active' : ''}" data-role="parent">👨‍👩‍👧 Parent</button>
           <button type="button" class="psg-role-item-btn ${activeRole === 'visitor' ? 'active' : ''}" data-role="visitor">🌐 Visitor / Alumni</button>
         </div>
-        <div class="text-end">
-          <button type="button" class="btn btn-sm btn-outline-secondary" id="psg-cancel-role-switch">Done</button>
-        </div>
+        <button type="button" class="psg-role-done-btn" id="psg-cancel-role-switch">Done</button>
+        <div style="clear: both;"></div>
       </div>
     `;
 
@@ -102,7 +130,6 @@ document.addEventListener('DOMContentLoaded', () => {
         updateRoleBadge();
         roleModalContainer.style.display = 'none';
 
-        // Add a notification in chat
         appendBotMessage(`Switched active session to **${activeRole.toUpperCase()}**. Responses and document permissions are now tailored to this role.`);
       });
     });
@@ -114,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (switchRoleBtn) {
     switchRoleBtn.addEventListener('click', () => {
-      if (roleModalContainer.style.display === 'block') {
+      if (roleModalContainer && roleModalContainer.style.display === 'block') {
         roleModalContainer.style.display = 'none';
       } else {
         showRoleSelector();
@@ -123,10 +150,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // =========================================================================
-  // MESSAGE RENDERING & SESSION PERSISTENCE
+  // 4. MESSAGE RENDERING & SESSION PERSISTENCE
   // =========================================================================
   function addInitialWelcomeMessage() {
-    let welcomeText = `Hello! I am **PSG Nexus**, your official AI campus assistant for PSG College of Technology.\n\nI am here to guide you with syllabus details, examination rules, hostel timings, fees, and campus navigation.`;
+    const welcomeText = `Hi! I'm the **PSGNexus AI**. 👋\n\nI can help you with admissions, placements, syllabus, CAT marks, hostel rules, and online form filling. What do you need?`;
 
     const defaultChips = [
       'Take me to form filling page',
@@ -170,17 +197,17 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function renderAllMessages() {
-    chatBody.innerHTML = '';
+    chatMessages.innerHTML = '';
     if (roleModalContainer) {
-      chatBody.appendChild(roleModalContainer);
+      chatMessages.appendChild(roleModalContainer);
     }
     messages.forEach(msg => renderSingleMessage(msg));
     scrollToBottom();
   }
 
   function renderSingleMessage(msg) {
-    const msgDiv = document.createElement('div');
-    msgDiv.className = `psg-message ${msg.sender} ${msg.status || ''}`;
+    const msgRow = document.createElement('div');
+    msgRow.className = `psg-message-row ${msg.sender} ${msg.status || ''}`;
 
     let formattedText = escapeHtml(msg.text)
       .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
@@ -207,17 +234,31 @@ document.addEventListener('DOMContentLoaded', () => {
       chipsHtml += `</div>`;
     }
 
-    msgDiv.innerHTML = `
-      <div class="psg-bubble">
-        <div>${formattedText}</div>
-        ${redirectHtml}
-      </div>
-      <div class="psg-msg-time">${msg.time}</div>
-      ${chipsHtml}
-    `;
+    if (msg.sender === 'user') {
+      msgRow.innerHTML = `
+        <div style="max-width: 82%;">
+          <div class="psg-bubble-user">
+            ${formattedText}
+          </div>
+          <div class="psg-msg-time">${msg.time}</div>
+        </div>
+      `;
+    } else {
+      msgRow.innerHTML = `
+        ${botAvatarSvg}
+        <div style="max-width: 84%; flex: 1;">
+          <div class="psg-bubble-bot">
+            <div>${formattedText}</div>
+            ${redirectHtml}
+          </div>
+          <div class="psg-msg-time">${msg.time}</div>
+          ${chipsHtml}
+        </div>
+      `;
+    }
 
-    // Chip click handler
-    const chipBtns = msgDiv.querySelectorAll('.psg-chip');
+    // Attach listeners for clickable chips
+    const chipBtns = msgRow.querySelectorAll('.psg-chip');
     chipBtns.forEach(btn => {
       btn.addEventListener('click', () => {
         const query = btn.getAttribute('data-chip');
@@ -225,7 +266,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
-    chatBody.appendChild(msgDiv);
+    chatMessages.appendChild(msgRow);
   }
 
   function saveMessagesToStorage() {
@@ -234,8 +275,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function scrollToBottom() {
     setTimeout(() => {
-      chatBody.scrollTop = chatBody.scrollHeight;
-    }, 50);
+      chatMessages.scrollTo({
+        top: chatMessages.scrollHeight,
+        behavior: 'smooth'
+      });
+    }, 40);
   }
 
   function escapeHtml(text) {
@@ -251,40 +295,26 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // =========================================================================
-  // TYPING INDICATOR
+  // 5. TYPING INDICATOR
   // =========================================================================
-  let typingElement = null;
-
-  function showTypingIndicator() {
-    if (typingElement) return;
-    typingElement = document.createElement('div');
-    typingElement.className = 'psg-message bot';
-    typingElement.innerHTML = `
-      <div class="psg-typing-indicator">
-        <div class="psg-typing-dot"></div>
-        <div class="psg-typing-dot"></div>
-        <div class="psg-typing-dot"></div>
-      </div>
-    `;
-    chatBody.appendChild(typingElement);
-    scrollToBottom();
-  }
-
-  function hideTypingIndicator() {
-    if (typingElement) {
-      typingElement.remove();
-      typingElement = null;
+  function setTyping(isTyping) {
+    if (!typingIndicator) return;
+    if (isTyping) {
+      typingIndicator.classList.remove('hidden');
+      scrollToBottom();
+    } else {
+      typingIndicator.classList.add('hidden');
     }
   }
 
   // =========================================================================
-  // QUERY HANDLING & MONGODB SYNC
+  // 6. QUERY HANDLING & BACKEND MONGODB SYNC
   // =========================================================================
   async function handleUserQuery(query) {
     if (!query || query.trim() === '') return;
 
     appendUserMessage(query);
-    showTypingIndicator();
+    setTyping(true);
 
     try {
       const response = await fetch('/api/chat', {
@@ -299,7 +329,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       const data = await response.json();
-      hideTypingIndicator();
+      setTyping(false);
 
       appendBotMessage(
         data.reply,
@@ -320,7 +350,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
     } catch (error) {
-      hideTypingIndicator();
+      setTyping(false);
       appendBotMessage(
         '⚠️ Could not connect to the campus server. Please verify your Node.js server is running.',
         'error'
@@ -329,19 +359,20 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Form Submit Listener
-  chatForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const query = chatInput.value.trim();
-    if (query) {
-      chatInput.value = '';
-      handleUserQuery(query);
-    }
-  });
+  if (chatForm) {
+    chatForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const query = chatInput.value.trim();
+      if (query) {
+        chatInput.value = '';
+        handleUserQuery(query);
+      }
+    });
+  }
 
   // Clear Chat History Button
-  const resetChatBtn = document.getElementById('psg-reset-chat-btn');
-  if (resetChatBtn) {
-    resetChatBtn.addEventListener('click', () => {
+  if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
       if (confirm('Clear conversation history?')) {
         messages = [];
         sessionStorage.removeItem('psg_chat_messages');
